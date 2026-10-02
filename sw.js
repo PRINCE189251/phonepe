@@ -1,6 +1,8 @@
 self.addEventListener("install", event => {
 
-  console.log("Payment Alert Service Worker installed");
+  console.log(
+    "Payment Prank Service Worker installed"
+  );
 
   self.skipWaiting();
 
@@ -23,10 +25,13 @@ self.addEventListener(
     event.notification.close();
 
     event.waitUntil(
+
       clients.matchAll({
         type: "window",
         includeUncontrolled: true
-      }).then(clientList => {
+      })
+
+      .then(clientList => {
 
         for (const client of clientList) {
 
@@ -40,14 +45,14 @@ self.addEventListener(
 
         if (clients.openWindow) {
 
-          return clients.openWindow(
-            "./"
-          );
+          return clients.openWindow("./");
 
         }
 
       })
+
     );
 
   }
+
 );
