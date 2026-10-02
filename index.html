@@ -7,125 +7,129 @@
 <title>Demo Payment Scheduler</title>
 
 <style>
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f6f8;
-    color:#222;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
 }
 
-.container{
-    max-width:850px;
-    margin:30px auto;
-    padding:20px;
+.container {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 20px;
 }
 
-.card{
-    background:white;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 8px 30px rgba(0,0,0,.08);
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
 
-h1{
-    margin-top:0;
-    text-align:center;
+h1 {
+    text-align: center;
+    margin-top: 0;
 }
 
-.warning{
-    background:#fff3cd;
-    border:1px solid #ffe08a;
-    padding:12px;
-    border-radius:10px;
-    text-align:center;
-    font-weight:bold;
-    margin-bottom:20px;
+.warning {
+    background: #fff3cd;
+    border: 1px solid #ffe08a;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.row{
-    display:grid;
-    grid-template-columns:100px 1fr 140px 70px;
-    gap:10px;
-    margin-bottom:10px;
+.row {
+    display: grid;
+    grid-template-columns: 100px 1fr 140px 70px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-input{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:9px;
-    font-size:15px;
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 15px;
 }
 
-button{
-    border:0;
-    padding:12px 16px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:bold;
+button {
+    border: 0;
+    padding: 12px 16px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.add{
-    background:#e8f0fe;
+button:hover {
+    opacity: 0.9;
 }
 
-.start{
-    background:#16a34a;
-    color:white;
+.add {
+    background: #e8f0fe;
 }
 
-.stop{
-    background:#dc2626;
-    color:white;
+.start {
+    background: #16a34a;
+    color: white;
 }
 
-.test{
-    background:#7c3aed;
-    color:white;
+.stop {
+    background: #dc2626;
+    color: white;
 }
 
-.remove{
-    background:#fee2e2;
-    color:#b91c1c;
+.test {
+    background: #7c3aed;
+    color: white;
 }
 
-.buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:20px;
+.remove {
+    background: #fee2e2;
+    color: #b91c1c;
 }
 
-#status{
-    margin-top:20px;
-    padding:14px;
-    background:#f1f5f9;
-    border-radius:10px;
-    text-align:center;
-    font-weight:bold;
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-#countdown{
-    text-align:center;
-    margin-top:10px;
-    font-size:18px;
+#status {
+    margin-top: 20px;
+    padding: 14px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
 }
 
-@media(max-width:650px){
+#countdown {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+}
 
-    .row{
-        grid-template-columns:1fr;
-        padding:15px;
-        background:#f8fafc;
-        border-radius:12px;
+@media (max-width: 650px) {
+
+    .row {
+        grid-template-columns: 1fr;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 12px;
     }
 
-    .remove{
-        width:100%;
+    .remove {
+        width: 100%;
     }
 }
 </style>
@@ -140,7 +144,7 @@ button{
 <h1>💰 Demo Payment Scheduler</h1>
 
 <div class="warning">
-DEMO / PRANK — NOT A REAL PAYMENT
+    DEMO / PRANK — NOT A REAL PAYMENT
 </div>
 
 <h3>Notifications</h3>
@@ -148,35 +152,34 @@ DEMO / PRANK — NOT A REAL PAYMENT
 <div id="schedule"></div>
 
 <button class="add" onclick="addRow()">
-➕ Add Notification
+    ➕ Add Notification
 </button>
 
 <div class="buttons">
 
 <button onclick="allowNotifications()">
-🔔 Allow Notifications
+    🔔 Allow Notifications
 </button>
 
 <button class="test" onclick="testVoice()">
-🔊 Test Voice
+    🔊 Test Voice
 </button>
 
 <button class="start" onclick="startSchedule()">
-▶️ Start
+    ▶️ Start
 </button>
 
 <button class="stop" onclick="stopSchedule()">
-⏹️ Stop
+    ⏹️ Stop
 </button>
 
 </div>
 
 <div id="status">
-Ready
+    Ready
 </div>
 
-<div id="countdown">
-</div>
+<div id="countdown"></div>
 
 </div>
 </div>
@@ -184,53 +187,51 @@ Ready
 
 <script>
 
-/* =================================
-   GLOBAL VARIABLES
-================================= */
+/* =========================================
+   VARIABLES
+========================================= */
 
 let timers = [];
-
 let running = false;
-
 let startTime = 0;
 
 
-/* =================================
-   DEFAULT ROWS
-================================= */
+/* =========================================
+   DEFAULT NOTIFICATIONS
+========================================= */
 
 const defaultRows = [
 
     {
-        time:15,
-        name:"Prince",
-        amount:"3000"
+        time: 15,
+        name: "Prince",
+        amount: "5000"
     },
 
     {
-        time:17,
-        name:"Nancy",
-        amount:"5000"
+        time: 17,
+        name: "Nancy",
+        amount: "3000"
     },
 
     {
-        time:30,
-        name:"Rahul",
-        amount:"2000"
+        time: 30,
+        name: "Rahul",
+        amount: "2000"
     }
 
 ];
 
 
-/* =================================
-   ADD ROW
-================================= */
+/* =========================================
+   ADD NOTIFICATION ROW
+========================================= */
 
 function addRow(
     time = "",
     name = "",
     amount = ""
-){
+) {
 
     const container =
         document.getElementById("schedule");
@@ -278,9 +279,9 @@ function addRow(
 }
 
 
-/* =================================
-   LOAD DEFAULTS
-================================= */
+/* =========================================
+   LOAD DEFAULT ROWS
+========================================= */
 
 defaultRows.forEach(item => {
 
@@ -293,11 +294,11 @@ defaultRows.forEach(item => {
 });
 
 
-/* =================================
+/* =========================================
    GET SCHEDULE
-================================= */
+========================================= */
 
-function getSchedule(){
+function getSchedule() {
 
     const rows =
         document.querySelectorAll(".row");
@@ -312,23 +313,26 @@ function getSchedule(){
             );
 
         const name =
-            row.querySelector(".name").value.trim();
+            row.querySelector(".name")
+            .value
+            .trim();
 
         const amount =
-            row.querySelector(".amount").value;
+            row.querySelector(".amount")
+            .value;
 
-        if(
+        if (
             !isNaN(time) &&
             time >= 0 &&
             name !== "" &&
             amount !== ""
-        ){
+        ) {
 
             schedule.push({
 
-                time:time,
-                name:name,
-                amount:amount
+                time: time,
+                name: name,
+                amount: amount
 
             });
 
@@ -337,22 +341,20 @@ function getSchedule(){
     });
 
     schedule.sort(
-        (a,b) => a.time - b.time
+        (a, b) => a.time - b.time
     );
 
     return schedule;
 }
 
 
-/* =================================
+/* =========================================
    ALLOW NOTIFICATIONS
-================================= */
+========================================= */
 
-async function allowNotifications(){
+async function allowNotifications() {
 
-    if(
-        !("Notification" in window)
-    ){
+    if (!("Notification" in window)) {
 
         alert(
             "This browser does not support notifications."
@@ -364,57 +366,59 @@ async function allowNotifications(){
     const permission =
         await Notification.requestPermission();
 
-    if(permission === "granted"){
+    if (permission === "granted") {
 
         document.getElementById("status")
         .textContent =
         "🔔 Notifications allowed";
 
-    }
-
-    else{
+    } else {
 
         document.getElementById("status")
         .textContent =
         "❌ Notification permission denied";
 
     }
-
 }
 
 
-/* =================================
-   SPEECH VOICE
-================================= */
+/* =========================================
+   VOICE FUNCTION
+========================================= */
 
-function speakPayment(item){
+function speakPayment(item) {
 
-    if(
-        !("speechSynthesis" in window)
-    ){
+    if (!("speechSynthesis" in window)) {
 
         console.log(
             "Speech synthesis not supported"
         );
 
         return;
-
     }
 
+
+    /* Amount */
 
     const money =
         Number(item.amount)
         .toLocaleString("en-IN");
 
 
+    /* =====================================
+       VOICE SENTENCE
+
+       Example:
+       5000 rupees received on PhonePe.
+    ===================================== */
+
     const message =
         money +
-        " rupees received from " +
-        item.name;
+        " rupees received on PhonePe.";
 
 
     console.log(
-        "Trying to speak:",
+        "Speaking:",
         message
     );
 
@@ -423,6 +427,8 @@ function speakPayment(item){
 
     window.speechSynthesis.cancel();
 
+
+    /* Create voice */
 
     const voice =
         new SpeechSynthesisUtterance(
@@ -439,7 +445,9 @@ function speakPayment(item){
     voice.volume = 1;
 
 
-    /* Find Indian English voice */
+    /* =====================================
+       FIND INDIAN ENGLISH VOICE
+    ===================================== */
 
     const voices =
         window.speechSynthesis
@@ -455,7 +463,7 @@ function speakPayment(item){
         );
 
 
-    if(indianVoice){
+    if (indianVoice) {
 
         voice.voice =
             indianVoice;
@@ -468,160 +476,187 @@ function speakPayment(item){
     }
 
 
-    voice.onstart = function(){
+    /* =====================================
+       VOICE START
+    ===================================== */
 
-        document.getElementById(
-            "status"
-        ).textContent =
-        "🔊 Speaking: " +
-        message;
+    voice.onstart =
+        function () {
 
-    };
+            document.getElementById(
+                "status"
+            ).textContent =
+            "🔊 Speaking: " +
+            message;
 
-
-    voice.onend = function(){
-
-        document.getElementById(
-            "status"
-        ).textContent =
-        "🔔 Notification sent";
-
-    };
+        };
 
 
-    voice.onerror = function(event){
+    /* =====================================
+       VOICE END
+    ===================================== */
 
-        console.log(
-            "VOICE ERROR:",
-            event.error
-        );
+    voice.onend =
+        function () {
 
-        document.getElementById(
-            "status"
-        ).textContent =
-        "⚠️ Voice error: " +
-        event.error;
+            document.getElementById(
+                "status"
+            ).textContent =
+            "🔔 Notification sent";
 
-    };
+        };
 
+
+    /* =====================================
+       VOICE ERROR
+    ===================================== */
+
+    voice.onerror =
+        function (event) {
+
+            console.log(
+                "VOICE ERROR:",
+                event.error
+            );
+
+            document.getElementById(
+                "status"
+            ).textContent =
+            "⚠️ Voice error: " +
+            event.error;
+
+        };
+
+
+    /* =====================================
+       SPEAK
+    ===================================== */
 
     window.speechSynthesis.speak(
         voice
     );
-
 }
 
 
-/* =================================
+/* =========================================
    TEST VOICE
-================================= */
+========================================= */
 
-function testVoice(){
+function testVoice() {
 
     const testItem = {
 
-        name:"Prince",
+        name: "Demo",
 
-        amount:"3000"
+        amount: "5000"
 
     };
 
-
-    speakPayment(testItem);
-
+    speakPayment(
+        testItem
+    );
 }
 
 
-/* =================================
-   LOAD VOICES
-================================= */
+/* =========================================
+   LOAD AVAILABLE VOICES
+========================================= */
 
-if(
+if (
     "speechSynthesis" in window
-){
+) {
 
     window.speechSynthesis
     .addEventListener(
         "voiceschanged",
-        function(){
+        function () {
 
             console.log(
                 "Voices loaded:",
-                speechSynthesis
+                window.speechSynthesis
                 .getVoices()
                 .length
             );
 
         }
     );
-
 }
 
 
-/* =================================
+/* =========================================
    SEND NOTIFICATION
-================================= */
+========================================= */
 
-async function sendNotification(item){
+async function sendNotification(item) {
 
-    const registration =
-        await navigator
-        .serviceWorker
-        .ready;
+    try {
 
-
-    const money =
-        Number(item.amount)
-        .toLocaleString("en-IN");
+        const registration =
+            await navigator
+            .serviceWorker
+            .ready;
 
 
-    const body =
-        "DEMO / PRANK — NOT A REAL PAYMENT\n\n" +
-        "₹" +
-        money +
-        " received from " +
-        item.name;
+        const money =
+            Number(item.amount)
+            .toLocaleString("en-IN");
 
 
-    await registration
-    .showNotification(
+        const body =
+            "DEMO / PRANK — NOT A REAL PAYMENT\n\n" +
+            "₹" +
+            money +
+            " received on PhonePe";
 
-        "💰 Demo Payment Received",
 
-        {
+        /* Notification */
 
-            body:body,
+        await registration
+        .showNotification(
 
-            tag:
-            "demo-payment-" +
-            Date.now(),
+            "💰 Demo Payment Received",
 
-            data:{
-                demo:true
+            {
+
+                body: body,
+
+                tag:
+                "demo-payment-" +
+                Date.now(),
+
+                data: {
+                    demo: true
+                }
+
             }
 
-        }
-
-    );
+        );
 
 
-    /* Speak after notification */
+        /* Voice */
 
-    speakPayment(item);
+        speakPayment(item);
 
+
+    } catch (error) {
+
+        console.log(
+            "Notification error:",
+            error
+        );
+
+    }
 }
 
 
-/* =================================
+/* =========================================
    START SCHEDULE
-================================= */
+========================================= */
 
-async function startSchedule(){
+async function startSchedule() {
 
-    if(running){
-
+    if (running) {
         return;
-
     }
 
 
@@ -629,64 +664,63 @@ async function startSchedule(){
         getSchedule();
 
 
-    if(schedule.length === 0){
+    if (schedule.length === 0) {
 
         alert(
             "Please add at least one notification."
         );
 
         return;
-
     }
 
 
-    if(
+    if (
         !("Notification" in window)
-    ){
+    ) {
 
         alert(
             "Notifications are not supported."
         );
 
         return;
-
     }
 
 
-    if(
+    /* Request permission */
+
+    if (
         Notification.permission !==
         "granted"
-    ){
+    ) {
 
         const permission =
             await Notification
             .requestPermission();
 
 
-        if(permission !== "granted"){
+        if (
+            permission !==
+            "granted"
+        ) {
 
             alert(
                 "Please allow notifications first."
             );
 
             return;
-
         }
-
     }
 
 
-    /* Make sure service worker exists */
+    /* Service worker */
 
-    try{
+    try {
 
         await navigator
         .serviceWorker
         .ready;
 
-    }
-
-    catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -711,24 +745,24 @@ async function startSchedule(){
     "Waiting for first notification...";
 
 
-    /* Create timer for every row */
+    /* =====================================
+       CREATE TIMER FOR EACH NOTIFICATION
+    ===================================== */
 
     schedule.forEach(item => {
 
         const timer =
             setTimeout(
 
-                function(){
+                function () {
 
-                    if(!running){
-
+                    if (!running) {
                         return;
-
                     }
 
-
-                    sendNotification(item);
-
+                    sendNotification(
+                        item
+                    );
 
                 },
 
@@ -742,44 +776,42 @@ async function startSchedule(){
     });
 
 
-    /* Countdown */
-
     updateCountdown(
         schedule
     );
-
 }
 
 
-/* =================================
+/* =========================================
    COUNTDOWN
-================================= */
+========================================= */
 
-function updateCountdown(schedule){
+function updateCountdown(
+    schedule
+) {
 
-    if(!running){
-
+    if (!running) {
         return;
-
     }
 
 
     const elapsed =
-        (Date.now() - startTime)
-        / 1000;
+        (
+            Date.now() -
+            startTime
+        ) / 1000;
 
 
     const remaining =
-        schedule
-        .filter(
+        schedule.filter(
             item =>
             item.time > elapsed
         );
 
 
-    if(
+    if (
         remaining.length === 0
-    ){
+    ) {
 
         document.getElementById(
             "countdown"
@@ -789,7 +821,6 @@ function updateCountdown(schedule){
         running = false;
 
         return;
-
     }
 
 
@@ -799,7 +830,8 @@ function updateCountdown(schedule){
 
     const seconds =
         Math.ceil(
-            next.time - elapsed
+            next.time -
+            elapsed
         );
 
 
@@ -821,15 +853,14 @@ function updateCountdown(schedule){
         () => updateCountdown(schedule),
         250
     );
-
 }
 
 
-/* =================================
+/* =========================================
    STOP
-================================= */
+========================================= */
 
-function stopSchedule(){
+function stopSchedule() {
 
     timers.forEach(
         timer =>
@@ -856,26 +887,28 @@ function stopSchedule(){
 }
 
 
-/* =================================
+/* =========================================
    SERVICE WORKER
-================================= */
+========================================= */
 
-if(
+if (
     "serviceWorker" in navigator
-){
+) {
 
     navigator.serviceWorker
     .register("./sw.js")
+
     .then(
         registration => {
 
             console.log(
-                "Service Worker registered",
+                "Service Worker registered:",
                 registration
             );
 
         }
     )
+
     .catch(
         error => {
 
