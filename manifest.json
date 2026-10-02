@@ -4,6 +4,5 @@
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f4f1fa",
-  "theme_color": "#5b20d6",
-  "description": "Payment notification prank simulator"
+  "theme_color": "#5b20d6"
 }
