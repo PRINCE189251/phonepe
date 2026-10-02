@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Demo Payment Notification Simulator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Demo Notification Scheduler</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -22,11 +25,12 @@ header{
 }
 
 .header{
-  max-width:520px;
+  max-width:650px;
   margin:auto;
 }
 
 .badge{
+  display:inline-block;
   background:#ffffff30;
   padding:7px 12px;
   border-radius:20px;
@@ -35,76 +39,79 @@ header{
 }
 
 .container{
-  max-width:520px;
+  max-width:650px;
   margin:-40px auto 30px;
-  padding:0 16px;
+  padding:0 15px;
 }
 
 .card{
   background:white;
-  padding:22px;
   border-radius:24px;
+  padding:22px;
   box-shadow:0 15px 40px #30145c22;
 }
 
 .demo{
   background:#fff5d8;
   border:1px solid #f0d27b;
-  padding:13px;
+  padding:14px;
   border-radius:14px;
   font-size:13px;
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
-.payment{
-  text-align:center;
+h2{
+  margin-top:0;
+}
+
+.schedule{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.row{
   background:#faf8ff;
-  padding:20px;
-  border-radius:20px;
+  border:1px solid #e5def0;
+  padding:14px;
+  border-radius:16px;
 }
 
-.tick{
-  width:60px;
-  height:60px;
-  margin:auto;
-  border-radius:50%;
-  background:#e8ddff;
+.row-title{
+  font-weight:bold;
+  margin-bottom:10px;
   color:#5b20d6;
+}
+
+.grid{
   display:grid;
-  place-items:center;
-  font-size:30px;
-  font-weight:bold;
-}
-
-.amount{
-  font-size:38px;
-  font-weight:800;
-  margin-top:10px;
-}
-
-.received{
-  font-size:18px;
-  font-weight:bold;
-}
-
-.preview{
-  color:#777;
-  margin-top:5px;
-}
-
-label{
-  display:block;
-  margin-top:17px;
-  margin-bottom:7px;
-  font-weight:bold;
+  grid-template-columns:90px 1fr 100px;
+  gap:8px;
 }
 
 input{
   width:100%;
-  padding:13px;
+  padding:11px;
   border:1px solid #ddd6e8;
-  border-radius:12px;
-  font-size:16px;
+  border-radius:10px;
+  font-size:15px;
+}
+
+.remove{
+  width:100%;
+  background:#ffe5e5;
+  color:#d32f2f;
+  border:0;
+  padding:10px;
+  border-radius:10px;
+  font-weight:bold;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+.add{
+  background:#eee8fa;
+  color:#5b20d6;
 }
 
 button{
@@ -115,17 +122,12 @@ button{
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
-  margin-top:16px;
+  margin-top:14px;
 }
 
 .primary{
   background:#5b20d6;
   color:white;
-}
-
-.secondary{
-  background:#eee8fa;
-  color:#5b20d6;
 }
 
 .stop{
@@ -134,17 +136,34 @@ button{
   display:none;
 }
 
+.secondary{
+  background:#eee8fa;
+  color:#5b20d6;
+}
+
 .status{
   margin-top:16px;
-  padding:12px;
   background:#f5f3f7;
+  padding:12px;
   border-radius:12px;
+  font-size:14px;
 }
 
 .timer{
   text-align:center;
+  margin-top:10px;
   color:#666;
-  margin-top:12px;
+}
+
+@media(max-width:500px){
+
+  .grid{
+    grid-template-columns:80px 1fr;
+  }
+
+  .grid input:nth-child(3){
+    grid-column:1 / -1;
+  }
 }
 </style>
 </head>
@@ -152,117 +171,92 @@ button{
 <body>
 
 <header>
+
 <div class="header">
 
-<span class="badge">DEMO / PRANK</span>
+<span class="badge">
+DEMO / PRANK
+</span>
 
-<h1>Payment Notification Simulator</h1>
+<h1>
+Notification Scheduler
+</h1>
 
-<p>Notification scheduling simulator</p>
+<p>
+Create different demo notifications at different times.
+</p>
 
 </div>
+
 </header>
+
 
 <main class="container">
 
 <section class="card">
 
 <div class="demo">
-⚠️ <b>SIMULATION ONLY</b><br>
-These are demo notifications, not real payments.
-</div>
 
-<div class="payment">
+⚠️ <b>SIMULATION ONLY</b>
 
-<div class="tick">✓</div>
+<br><br>
 
-<div class="amount" id="amountPreview">
-₹5,000
-</div>
-
-<div class="received">
-Demo Payment Received
-</div>
-
-<div class="preview" id="senderPreview">
-From: Customer
-</div>
+These notifications are only a demo/prank simulation.
+They are not real payments or bank transactions.
 
 </div>
 
 
-<label>Amount</label>
-
-<input
-id="amount"
-type="number"
-value="5000"
-min="1"
->
+<h2>
+Notification Schedule
+</h2>
 
 
-<label>Sender Name</label>
-
-<input
-id="sender"
-type="text"
-value="Kalu"
->
-
-
-<label>Notification interval</label>
-
-<input
-id="interval"
-type="number"
-value="15"
-min="1"
->
-
-
-<label>How many notifications?</label>
-
-<input
-id="count"
-type="number"
-value="5"
-min="1"
-max="100"
->
+<div
+id="schedule"
+class="schedule">
+</div>
 
 
 <button
-class="secondary"
-id="permission">
-🔔 Allow Notifications
+id="addButton"
+class="add">
+➕ ADD NOTIFICATION
 </button>
 
 
 <button
-class="primary"
-id="start">
-▶️ START NOTIFICATIONS
+id="permissionButton"
+class="secondary">
+🔔 ALLOW NOTIFICATIONS
 </button>
 
 
 <button
-class="stop"
-id="stop">
+id="startButton"
+class="primary">
+▶️ START SCHEDULE
+</button>
+
+
+<button
+id="stopButton"
+class="stop">
 ⏹️ STOP
 </button>
 
 
 <div
-class="status"
-id="status">
+id="status"
+class="status">
 Ready
 </div>
 
 
 <div
-class="timer"
-id="timer">
-No notifications scheduled
+id="timer"
+class="timer">
+No schedule running
 </div>
 
 </section>
@@ -272,32 +266,24 @@ No notifications scheduled
 
 <script>
 
-const amount =
-document.getElementById("amount");
+/* ==========================
+   ELEMENTS
+========================== */
 
-const sender =
-document.getElementById("sender");
+const schedule =
+document.getElementById("schedule");
 
-const interval =
-document.getElementById("interval");
-
-const count =
-document.getElementById("count");
-
-const amountPreview =
-document.getElementById("amountPreview");
-
-const senderPreview =
-document.getElementById("senderPreview");
+const addButton =
+document.getElementById("addButton");
 
 const permissionButton =
-document.getElementById("permission");
+document.getElementById("permissionButton");
 
 const startButton =
-document.getElementById("start");
+document.getElementById("startButton");
 
 const stopButton =
-document.getElementById("stop");
+document.getElementById("stopButton");
 
 const status =
 document.getElementById("status");
@@ -306,41 +292,192 @@ const timer =
 document.getElementById("timer");
 
 
-let timerID = null;
-let countdownID = null;
-
 let running = false;
-let sent = 0;
-let secondsLeft = 0;
+
+let scheduledTimers = [];
+
+let countdownTimer = null;
+
+let scheduleRows = [];
 
 
 /* ==========================
-   PREVIEW
+   ADD ROW
 ========================== */
 
-function updatePreview(){
+function addNotification(
+  time = 15,
+  name = "Prince",
+  amount = 3000
+){
 
-  const money =
-    Number(amount.value || 0)
-    .toLocaleString("en-IN");
+  const id =
+    Date.now() +
+    Math.random();
 
-  amountPreview.textContent =
-    "₹" + money;
 
-  senderPreview.textContent =
-    "From: " +
-    (sender.value.trim() || "Customer");
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "row";
+
+  row.dataset.id =
+    id;
+
+
+  row.innerHTML = `
+
+    <div class="row-title">
+      Notification ${schedule.children.length + 1}
+    </div>
+
+    <div class="grid">
+
+      <input
+        class="time"
+        type="number"
+        min="1"
+        value="${time}"
+        placeholder="Seconds"
+        title="Seconds after START"
+      >
+
+      <input
+        class="name"
+        type="text"
+        value="${name}"
+        placeholder="Sender name"
+      >
+
+      <input
+        class="amount"
+        type="number"
+        min="1"
+        value="${amount}"
+        placeholder="Amount"
+      >
+
+    </div>
+
+    <button
+      class="remove"
+      type="button">
+      🗑 REMOVE
+    </button>
+
+  `;
+
+
+  const remove =
+    row.querySelector(".remove");
+
+
+  remove.onclick =
+    function(){
+
+      row.remove();
+
+      renumberRows();
+
+    };
+
+
+  schedule.appendChild(row);
+
 }
 
-amount.addEventListener(
-  "input",
-  updatePreview
-);
 
-sender.addEventListener(
-  "input",
-  updatePreview
-);
+/* ==========================
+   RENUMBER
+========================== */
+
+function renumberRows(){
+
+  const rows =
+    schedule.querySelectorAll(".row");
+
+
+  rows.forEach(
+    (row,index) => {
+
+      row.querySelector(
+        ".row-title"
+      ).textContent =
+        "Notification " +
+        (index + 1);
+
+    }
+  );
+
+}
+
+
+/* ==========================
+   GET SCHEDULE
+========================== */
+
+function getSchedule(){
+
+  const rows =
+    schedule.querySelectorAll(".row");
+
+  const data = [];
+
+
+  rows.forEach(
+    row => {
+
+      const time =
+        Number(
+          row.querySelector(".time").value
+        );
+
+      const name =
+        row.querySelector(".name")
+        .value
+        .trim();
+
+      const amount =
+        Number(
+          row.querySelector(".amount").value
+        );
+
+
+      if(
+        time > 0 &&
+        name &&
+        amount > 0
+      ){
+
+        data.push({
+
+          time:time,
+
+          name:name,
+
+          amount:amount
+
+        });
+
+      }
+
+    }
+  );
+
+
+  /*
+    Sort by time.
+  */
+
+  data.sort(
+    (a,b) =>
+      a.time - b.time
+  );
+
+
+  return data;
+}
 
 
 /* ==========================
@@ -350,7 +487,9 @@ sender.addEventListener(
 permissionButton.onclick =
 async function(){
 
-  if(!("Notification" in window)){
+  if(
+    !("Notification" in window)
+  ){
 
     status.textContent =
       "❌ Notifications are not supported.";
@@ -358,19 +497,25 @@ async function(){
     return;
   }
 
+
   const result =
     await Notification.requestPermission();
 
-  if(result === "granted"){
+
+  if(
+    result === "granted"
+  ){
 
     status.textContent =
-      "✅ Notification permission granted.";
+      "✅ Notifications allowed.";
 
   }else{
 
     status.textContent =
       "❌ Notification permission denied.";
+
   }
+
 };
 
 
@@ -378,103 +523,93 @@ async function(){
    SEND NOTIFICATION
 ========================== */
 
-async function sendNotification(){
+async function sendNotification(
+  item
+){
 
   if(
-    !("Notification" in window)
+    Notification.permission !==
+    "granted"
   ){
+
     return;
   }
 
-  if(
-    Notification.permission !== "granted"
-  ){
-    status.textContent =
-      "❌ Notifications are not allowed.";
-    return;
-  }
 
   const money =
-    Number(amount.value || 0)
+    Number(item.amount)
     .toLocaleString("en-IN");
 
-  const person =
-    sender.value.trim() ||
-    "Customer";
 
-
-  const title =
-    "💰 Demo Payment Received";
-
-
-  const message =
+  const body =
     "₹" +
     money +
-    " received from " +
-    person +
+    " demo payment received from " +
+    item.name +
     "\n\n" +
     "DEMO / PRANK — NOT A REAL PAYMENT";
 
 
   try{
 
-    if("serviceWorker" in navigator){
+    if(
+      "serviceWorker" in navigator
+    ){
 
       const registration =
-        await navigator.serviceWorker.ready;
+        await navigator
+        .serviceWorker
+        .ready;
+
 
       await registration.showNotification(
-        title,
+
+        "💰 Demo Payment Received",
+
         {
-          body:message,
+
+          body:body,
 
           tag:
             "demo-payment-" +
             Date.now(),
 
-          requireInteraction:false,
-
           data:{
             demo:true
           }
+
         }
+
       );
 
     }else{
 
       new Notification(
-        title,
+        "💰 Demo Payment Received",
         {
-          body:message
+          body:body
         }
       );
+
     }
+
+
+    status.textContent =
+      "🔔 Sent: ₹" +
+      money +
+      " from " +
+      item.name;
+
 
   }catch(error){
 
     console.error(error);
 
     status.textContent =
-      "❌ Notification failed.";
+      "❌ Notification error.";
+
   }
-}
 
-
-/* ==========================
-   SEND ONE
-========================== */
-
-async function sendOne(){
-
-  sent++;
-
-  await sendNotification();
-
-  status.textContent =
-    "🟢 Sent notification " +
-    sent +
-    " of " +
-    count.value;
 }
 
 
@@ -494,45 +629,52 @@ async function start(){
   ){
 
     status.textContent =
-      "❌ Browser notifications unavailable.";
+      "❌ Notifications unavailable.";
 
     return;
   }
 
 
   if(
-    Notification.permission !== "granted"
+    Notification.permission !==
+    "granted"
   ){
 
     const permission =
       await Notification.requestPermission();
 
-    if(permission !== "granted"){
+
+    if(
+      permission !== "granted"
+    ){
 
       status.textContent =
-        "❌ Please allow notifications first.";
+        "❌ Please allow notifications.";
 
       return;
     }
+
   }
 
 
-  const seconds =
-    Math.max(
-      1,
-      Number(interval.value)
-    );
+  const data =
+    getSchedule();
 
 
-  const total =
-    Math.max(
-      1,
-      Number(count.value)
-    );
+  if(data.length === 0){
 
+    status.textContent =
+      "❌ Add at least one notification.";
+
+    return;
+  }
+
+
+  /*
+    Start.
+  */
 
   running = true;
-  sent = 0;
 
 
   startButton.style.display =
@@ -542,66 +684,68 @@ async function start(){
     "block";
 
 
-  /*
-    Send first notification immediately.
-  */
-
-  await sendOne();
-
-
-  if(total <= 1){
-
-    stop();
-
-    return;
-  }
-
-
-  secondsLeft = seconds;
-
-
-  timer.textContent =
-    "Next notification in " +
-    secondsLeft +
-    " seconds";
+  status.textContent =
+    "🟢 Schedule started.";
 
 
   /*
-    Repeat notification.
+    Cancel any old timers.
   */
 
-  timerID =
-    setInterval(
-      async function(){
+  scheduledTimers.forEach(
+    clearTimeout
+  );
 
-        if(!running){
-          return;
-        }
-
-
-        if(sent >= total){
-
-          stop();
-
-          return;
-        }
-
-
-        await sendOne();
-
-
-        secondsLeft = seconds;
-
-      },
-      seconds * 1000
-    );
+  scheduledTimers = [];
 
 
   /*
-    Countdown display.
+    Find total duration.
   */
 
-  countdownID =
+  const finalTime =
+    data[data.length - 1].time;
+
+
+  /*
+    Create each notification timer.
+  */
+
+  data.forEach(
+    item => {
+
+      const timerID =
+        setTimeout(
+          function(){
+
+            if(running){
+
+              sendNotification(item);
+
+            }
+
+          },
+          item.time * 1000
+        );
+
+
+      scheduledTimers.push(
+        timerID
+      );
+
+    }
+  );
+
+
+  /*
+    Countdown to next notification.
+  */
+
+  let startTime =
+    Date.now();
+
+
+  countdownTimer =
     setInterval(
       function(){
 
@@ -610,31 +754,53 @@ async function start(){
         }
 
 
-        secondsLeft--;
+        const elapsed =
+          (Date.now() - startTime)
+          / 1000;
 
 
-        if(secondsLeft < 0){
-          secondsLeft = 0;
-        }
+        const remaining =
+          data
+          .filter(
+            item =>
+              item.time > elapsed
+          );
 
 
-        if(sent >= total){
+        if(
+          remaining.length === 0
+        ){
 
           timer.textContent =
-            "All notifications sent.";
+            "✅ Schedule completed.";
+
+          stop(false);
 
           return;
         }
 
 
+        const next =
+          remaining[0];
+
+
+        const seconds =
+          Math.ceil(
+            next.time - elapsed
+          );
+
+
         timer.textContent =
-          "Next notification in " +
-          secondsLeft +
+          "Next: " +
+          next.name +
+          " in " +
+          seconds +
           " seconds";
 
       },
-      1000
+      500
     );
+
 }
 
 
@@ -642,17 +808,27 @@ async function start(){
    STOP
 ========================== */
 
-function stop(){
+function stop(
+  showMessage = true
+){
 
   running = false;
 
 
-  clearInterval(timerID);
-  clearInterval(countdownID);
+  scheduledTimers.forEach(
+    clearTimeout
+  );
 
 
-  timerID = null;
-  countdownID = null;
+  scheduledTimers = [];
+
+
+  clearInterval(
+    countdownTimer
+  );
+
+
+  countdownTimer = null;
 
 
   startButton.style.display =
@@ -662,47 +838,91 @@ function stop(){
     "none";
 
 
-  timer.textContent =
-    "Notifications stopped.";
+  if(showMessage){
 
+    status.textContent =
+      "🔴 Schedule stopped.";
 
-  status.textContent =
-    "🔴 Stopped.";
+    timer.textContent =
+      "No schedule running.";
+
+  }
+
 }
 
 
-stopButton.onclick = stop;
+/* ==========================
+   BUTTONS
+========================== */
+
+addButton.onclick =
+function(){
+
+  addNotification(
+    15,
+    "Prince",
+    3000
+  );
+
+};
+
+
+startButton.onclick =
+start;
+
+stopButton.onclick =
+function(){
+
+  stop(true);
+
+};
 
 
 /* ==========================
    SERVICE WORKER
 ========================== */
 
-if("serviceWorker" in navigator){
+if(
+  "serviceWorker" in navigator
+){
 
   navigator.serviceWorker
     .register("sw.js")
     .then(
       () =>
         console.log(
-          "Service worker registered."
+          "Service Worker ready"
         )
     )
     .catch(
       error =>
-        console.error(
-          "SW error:",
-          error
-        )
+        console.error(error)
     );
+
 }
 
 
 /* ==========================
-   INITIAL
+   DEFAULT ROWS
 ========================== */
 
-updatePreview();
+addNotification(
+  15,
+  "Prince",
+  3000
+);
+
+addNotification(
+  17,
+  "Nancy",
+  5000
+);
+
+addNotification(
+  30,
+  "Rahul",
+  2000
+);
 
 </script>
 
