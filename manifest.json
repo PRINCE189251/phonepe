@@ -1,0 +1,10 @@
+{
+  "name": "Payment Voice Alert",
+  "short_name": "Payment Alert",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f2fb",
+  "theme_color": "#5b20d6",
+  "description": "Payment notification and voice alert demo",
+  "icons": []
+}

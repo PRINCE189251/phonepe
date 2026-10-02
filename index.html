@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Payment Voice Alert</title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f2fb;
+      color: #17121f;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #5b20d6, #7b35ef);
+      color: white;
+      padding: 28px 20px 75px;
+    }
+
+    .header-content {
+      max-width: 520px;
+      margin: auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffffff25;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 12px 0 5px;
+      font-size: 27px;
+    }
+
+    .subtitle {
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: -45px auto 30px;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 24px;
+      box-shadow: 0 15px 40px #30145c22;
+    }
+
+    .payment {
+      background: #faf8ff;
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .tick {
+      width: 60px;
+      height: 60px;
+      margin: auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e8ddff;
+      color: #5b20d6;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .amount {
+      font-size: 38px;
+      font-weight: 800;
+      margin-top: 12px;
+    }
+
+    .received {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .sender-preview {
+      color: #706b78;
+      margin-top: 6px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 16px 0 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd6e8;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .primary {
+      background: #5b20d6;
+      color: white;
+    }
+
+    .secondary {
+      background: #eee8fa;
+      color: #5b20d6;
+    }
+
+    .status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f6f4f8;
+      color: #514b59;
+      font-size: 14px;
+    }
+
+    .note {
+      margin-top: 17px;
+      color: #77717d;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-content">
+
+      <span class="badge">DEMO</span>
+
+      <h1>Payment Voice Alert</h1>
+
+      <div class="subtitle">
+        Payment notification + voice announcement
+      </div>
+
+    </div>
+  </header>
+
+
+  <main class="container">
+
+    <section class="card">
+
+      <div class="payment">
+
+        <div class="tick">✓</div>
+
+        <div class="amount" id="amountPreview">
+          ₹5,000
+        </div>
+
+        <div class="received">
+          Payment Received
+        </div>
+
+        <div class="sender-preview" id="senderPreview">
+          From: Customer
+        </div>
+
+      </div>
+
+
+      <label>Amount received (₹)</label>
+
+      <input
+        id="amount"
+        type="number"
+        value="5000"
+        min="1"
+      >
+
+
+      <label>Sender name</label>
+
+      <input
+        id="sender"
+        type="text"
+        value="Customer"
+        placeholder="Customer"
+      >
+
+
+      <label>Voice language</label>
+
+      <select id="language">
+
+        <option value="hi-IN">
+          Hindi — रुपये प्राप्त हुए
+        </option>
+
+        <option value="en-IN">
+          English — rupees received
+        </option>
+
+      </select>
+
+
+      <div class="buttons">
+
+        <button
+          class="secondary"
+          id="voiceButton"
+        >
+          🔊 Test Voice
+        </button>
+
+
+        <button
+          class="secondary"
+          id="notificationButton"
+        >
+          🔔 Allow Notifications
+        </button>
+
+      </div>
+
+
+      <button
+        class="primary"
+        id="alertButton"
+      >
+        💰 Simulate Payment Alert
+      </button>
+
+
+      <div
+        class="status"
+        id="status"
+      >
+        Checking notification permission...
+      </div>
+
+
+      <div class="note">
+
+        This is a payment-alert demonstration.
+        It does not verify a real bank or UPI transaction.
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+<script>
+
+const amount =
+  document.getElementById("amount");
+
+const sender =
+  document.getElementById("sender");
+
+const language =
+  document.getElementById("language");
+
+const amountPreview =
+  document.getElementById("amountPreview");
+
+const senderPreview =
+  document.getElementById("senderPreview");
+
+const status =
+  document.getElementById("status");
+
+
+
+function getAmount() {
+
+  return Number(
+    amount.value || 0
+  ).toLocaleString("en-IN");
+
+}
+
+
+
+function getMessage() {
+
+  const money = getAmount();
+
+  const person =
+    sender.value.trim() || "Customer";
+
+
+  if (language.value === "hi-IN") {
+
+    return `${person} से ${money} रुपये प्राप्त हुए`;
+
+  }
+
+
+  return `Payment received from ${person}. ${money} rupees received`;
+
+}
+
+
+
+function updatePreview() {
+
+  amountPreview.textContent =
+    "₹" + getAmount();
+
+  senderPreview.textContent =
+    "From: " +
+    (sender.value.trim() || "Customer");
+
+}
+
+
+
+amount.addEventListener(
+  "input",
+  updatePreview
+);
+
+
+sender.addEventListener(
+  "input",
+  updatePreview
+);
+
+
+
+/* -------------------------
+   VOICE
+------------------------- */
+
+function speakPayment() {
+
+  if (!("speechSynthesis" in window)) {
+
+    alert(
+      "Voice is not supported in this browser."
+    );
+
+    return;
+  }
+
+
+  speechSynthesis.cancel();
+
+
+  const speech =
+    new SpeechSynthesisUtterance(
+      getMessage()
+    );
+
+
+  speech.lang =
+    language.value;
+
+  speech.rate = 0.88;
+
+  speech.pitch = 1;
+
+
+  speechSynthesis.speak(
+    speech
+  );
+
+}
+
+
+
+document
+  .getElementById("voiceButton")
+  .addEventListener(
+    "click",
+    speakPayment
+  );
+
+
+
+/* -------------------------
+   NOTIFICATION PERMISSION
+------------------------- */
+
+async function requestNotificationPermission() {
+
+  if (!("Notification" in window)) {
+
+    status.textContent =
+      "Notifications are not supported.";
+
+    return false;
+  }
+
+
+  const permission =
+    await Notification.requestPermission();
+
+
+  status.textContent =
+    "Notification permission: " +
+    permission;
+
+
+  return permission === "granted";
+
+}
+
+
+
+document
+  .getElementById("notificationButton")
+  .addEventListener(
+    "click",
+    requestNotificationPermission
+  );
+
+
+
+/* -------------------------
+   SERVICE WORKER
+------------------------- */
+
+async function registerServiceWorker() {
+
+  if ("serviceWorker" in navigator) {
+
+    try {
+
+      await navigator.serviceWorker.register(
+        "sw.js"
+      );
+
+      console.log(
+        "Service Worker registered"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Service Worker error:",
+        error
+      );
+
+    }
+
+  }
+
+}
+
+
+
+/* -------------------------
+   PAYMENT ALERT
+------------------------- */
+
+async function paymentAlert() {
+
+  if ("Notification" in window) {
+
+    if (
+      Notification.permission !==
+      "granted"
+    ) {
+
+      const allowed =
+        await requestNotificationPermission();
+
+      if (!allowed) {
+
+        speakPayment();
+
+        return;
+      }
+
+    }
+
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+
+    registration.showNotification(
+      "Payment Received 💰",
+      {
+        body: getMessage(),
+
+        tag: "payment-alert",
+
+        vibrate: [
+          200,
+          100,
+          200
+        ],
+
+        data: {
+          amount: getAmount()
+        }
+      }
+    );
+
+  }
+
+
+  speakPayment();
+
+}
+
+
+
+document
+  .getElementById("alertButton")
+  .addEventListener(
+    "click",
+    paymentAlert
+  );
+
+
+
+/* -------------------------
+   START
+------------------------- */
+
+updatePreview();
+
+registerServiceWorker();
+
+
+if ("Notification" in window) {
+
+  status.textContent =
+    "Notification permission: " +
+    Notification.permission;
+
+}
+
+</script>
+
+</body>
+</html>
