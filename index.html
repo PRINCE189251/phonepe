@@ -2,37 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Payment Prank Simulator</title>
-
-<link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Demo Payment Notification Simulator</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f4f1fa;
-  color:#17121f;
+  color:#18121f;
+}
+
+header{
+  background:linear-gradient(135deg,#5b20d6,#843cff);
+  color:white;
+  padding:30px 20px 70px;
 }
 
 .header{
-  background:linear-gradient(135deg,#5b20d6,#843cff);
-  color:white;
-  padding:30px 20px 75px;
-}
-
-.header-content{
   max-width:520px;
   margin:auto;
 }
 
 .badge{
-  display:inline-block;
   background:#ffffff30;
   padding:7px 12px;
   border-radius:20px;
@@ -40,37 +34,33 @@ body{
   font-weight:bold;
 }
 
-h1{
-  margin:12px 0 5px;
-}
-
 .container{
   max-width:520px;
-  margin:-45px auto 30px;
+  margin:-40px auto 30px;
   padding:0 16px;
 }
 
 .card{
   background:white;
-  border-radius:24px;
   padding:22px;
+  border-radius:24px;
   box-shadow:0 15px 40px #30145c22;
 }
 
 .demo{
   background:#fff5d8;
   border:1px solid #f0d27b;
-  padding:12px;
+  padding:13px;
   border-radius:14px;
   font-size:13px;
   margin-bottom:18px;
 }
 
 .payment{
+  text-align:center;
   background:#faf8ff;
   padding:20px;
   border-radius:20px;
-  text-align:center;
 }
 
 .tick{
@@ -109,7 +99,7 @@ label{
   font-weight:bold;
 }
 
-input,select{
+input{
   width:100%;
   padding:13px;
   border:1px solid #ddd6e8;
@@ -149,33 +139,26 @@ button{
   padding:12px;
   background:#f5f3f7;
   border-radius:12px;
-  font-size:14px;
 }
 
 .timer{
   text-align:center;
-  margin-top:12px;
   color:#666;
+  margin-top:12px;
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-<div class="header-content">
+<header>
+<div class="header">
 
-<span class="badge">
-DEMO / PRANK
-</span>
+<span class="badge">DEMO / PRANK</span>
 
-<h1>
-Payment Prank Simulator
-</h1>
+<h1>Payment Notification Simulator</h1>
 
-<div>
-Notification + Voice Announcement
-</div>
+<p>Notification scheduling simulator</p>
 
 </div>
 </header>
@@ -185,20 +168,15 @@ Notification + Voice Announcement
 <section class="card">
 
 <div class="demo">
-⚠️ <b>SIMULATION ONLY</b>
-<br><br>
-This is not a real payment or bank transaction.
+⚠️ <b>SIMULATION ONLY</b><br>
+These are demo notifications, not real payments.
 </div>
 
 <div class="payment">
 
-<div class="tick">
-✓
-</div>
+<div class="tick">✓</div>
 
-<div
-class="amount"
-id="amountPreview">
+<div class="amount" id="amountPreview">
 ₹5,000
 </div>
 
@@ -206,9 +184,7 @@ id="amountPreview">
 Demo Payment Received
 </div>
 
-<div
-class="preview"
-id="senderPreview">
+<div class="preview" id="senderPreview">
 From: Customer
 </div>
 
@@ -234,62 +210,38 @@ value="Kalu"
 >
 
 
-<label>Voice Language</label>
+<label>Notification interval</label>
 
-<select id="language">
-
-<option value="en-IN">
-English
-</option>
-
-<option value="hi-IN">
-Hindi
-</option>
-
-</select>
+<input
+id="interval"
+type="number"
+value="15"
+min="1"
+>
 
 
-<label>Interval</label>
+<label>How many notifications?</label>
 
-<select id="interval">
-
-<option value="10000">
-Every 10 seconds
-</option>
-
-<option value="30000">
-Every 30 seconds
-</option>
-
-<option value="60000">
-Every 1 minute
-</option>
-
-<option value="300000">
-Every 5 minutes
-</option>
-
-</select>
+<input
+id="count"
+type="number"
+value="5"
+min="1"
+max="100"
+>
 
 
 <button
 class="secondary"
-id="testVoice">
-🔊 TEST VOICE
-</button>
-
-
-<button
-class="secondary"
-id="allowNotifications">
-🔔 ALLOW NOTIFICATIONS
+id="permission">
+🔔 Allow Notifications
 </button>
 
 
 <button
 class="primary"
 id="start">
-▶️ START ALERTS
+▶️ START NOTIFICATIONS
 </button>
 
 
@@ -310,7 +262,7 @@ Ready
 <div
 class="timer"
 id="timer">
-No alerts running
+No notifications scheduled
 </div>
 
 </section>
@@ -320,21 +272,17 @@ No alerts running
 
 <script>
 
-/* ==========================
-   ELEMENTS
-========================== */
-
 const amount =
 document.getElementById("amount");
 
 const sender =
 document.getElementById("sender");
 
-const language =
-document.getElementById("language");
-
 const interval =
 document.getElementById("interval");
+
+const count =
+document.getElementById("count");
 
 const amountPreview =
 document.getElementById("amountPreview");
@@ -342,17 +290,8 @@ document.getElementById("amountPreview");
 const senderPreview =
 document.getElementById("senderPreview");
 
-const status =
-document.getElementById("status");
-
-const timer =
-document.getElementById("timer");
-
-const testVoice =
-document.getElementById("testVoice");
-
-const allowNotifications =
-document.getElementById("allowNotifications");
+const permissionButton =
+document.getElementById("permission");
 
 const startButton =
 document.getElementById("start");
@@ -360,302 +299,19 @@ document.getElementById("start");
 const stopButton =
 document.getElementById("stop");
 
+const status =
+document.getElementById("status");
 
-let alertInterval = null;
-let countdownInterval = null;
+const timer =
+document.getElementById("timer");
+
+
+let timerID = null;
+let countdownID = null;
+
 let running = false;
+let sent = 0;
 let secondsLeft = 0;
-
-
-/* ==========================
-   AUDIO
-========================== */
-
-let audioContext = null;
-
-
-function getAudio(){
-
-  if(!audioContext){
-
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    if(!AudioContext){
-
-      status.textContent =
-        "Audio is not supported.";
-
-      return null;
-    }
-
-    audioContext =
-      new AudioContext();
-  }
-
-  if(
-    audioContext.state === "suspended"
-  ){
-
-    audioContext.resume();
-  }
-
-  return audioContext;
-}
-
-
-function beep(){
-
-  const ctx =
-    getAudio();
-
-  if(!ctx) return;
-
-  const oscillator =
-    ctx.createOscillator();
-
-  const gain =
-    ctx.createGain();
-
-  oscillator.type =
-    "sine";
-
-  oscillator.frequency.value =
-    800;
-
-  gain.gain.setValueAtTime(
-    0.001,
-    ctx.currentTime
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    0.25,
-    ctx.currentTime + 0.03
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    ctx.currentTime + 0.5
-  );
-
-  oscillator.connect(gain);
-
-  gain.connect(
-    ctx.destination
-  );
-
-  oscillator.start();
-
-  oscillator.stop(
-    ctx.currentTime + 0.5
-  );
-}
-
-
-/* ==========================
-   SPEECH MESSAGE
-========================== */
-
-function getMessage(){
-
-  const money =
-    Number(amount.value || 0)
-      .toLocaleString("en-IN");
-
-  const name =
-    sender.value.trim() ||
-    "Customer";
-
-
-  if(
-    language.value === "hi-IN"
-  ){
-
-    return (
-      name +
-      " se " +
-      money +
-      " rupaye prapt hue"
-    );
-
-  }
-
-
-  return (
-    money +
-    " rupees received from " +
-    name
-  );
-}
-
-
-/* ==========================
-   SPEAK
-========================== */
-
-function speak(){
-
-  if(
-    !("speechSynthesis" in window)
-  ){
-
-    status.textContent =
-      "❌ Speech is not supported.";
-
-    return;
-  }
-
-
-  const message =
-    getMessage();
-
-
-  const voices =
-    speechSynthesis.getVoices();
-
-
-  let selectedVoice = null;
-
-
-  if(
-    language.value === "hi-IN"
-  ){
-
-    selectedVoice =
-      voices.find(
-        v =>
-          v.lang
-            .toLowerCase()
-            .startsWith("hi")
-      );
-
-  }else{
-
-    selectedVoice =
-      voices.find(
-        v =>
-          v.lang
-            .toLowerCase()
-            .startsWith("en-in")
-      );
-
-    if(!selectedVoice){
-
-      selectedVoice =
-        voices.find(
-          v =>
-            v.lang
-              .toLowerCase()
-              .startsWith("en")
-        );
-    }
-  }
-
-
-  const utterance =
-    new SpeechSynthesisUtterance(
-      message
-    );
-
-
-  utterance.lang =
-    language.value;
-
-  utterance.rate =
-    0.9;
-
-  utterance.pitch =
-    1;
-
-  utterance.volume =
-    1;
-
-
-  if(selectedVoice){
-
-    utterance.voice =
-      selectedVoice;
-  }
-
-
-  utterance.onstart =
-    function(){
-
-      status.textContent =
-        "🔊 Speaking: " +
-        message;
-    };
-
-
-  utterance.onend =
-    function(){
-
-      status.textContent =
-        running
-        ? "🟢 Alert system running"
-        : "✅ Voice finished";
-    };
-
-
-  utterance.onerror =
-    function(error){
-
-      console.error(
-        "Speech error:",
-        error
-      );
-
-      status.textContent =
-        "❌ Voice error: " +
-        error.error;
-    };
-
-
-  /*
-    Do NOT cancel previous speech here.
-    Cancelling was causing the earlier
-    'interrupted' problem.
-  */
-
-  speechSynthesis.speak(
-    utterance
-  );
-}
-
-
-/* ==========================
-   TEST VOICE
-========================== */
-
-testVoice.addEventListener(
-  "click",
-  function(){
-
-    /*
-      First unlock PC audio.
-    */
-
-    getAudio();
-
-    beep();
-
-
-    /*
-      Wait a little before speech.
-    */
-
-    setTimeout(
-      function(){
-
-        speak();
-
-      },
-      700
-    );
-
-  }
-);
 
 
 /* ==========================
@@ -666,19 +322,15 @@ function updatePreview(){
 
   const money =
     Number(amount.value || 0)
-      .toLocaleString("en-IN");
+    .toLocaleString("en-IN");
 
   amountPreview.textContent =
     "₹" + money;
 
   senderPreview.textContent =
     "From: " +
-    (
-      sender.value.trim() ||
-      "Customer"
-    );
+    (sender.value.trim() || "Customer");
 }
-
 
 amount.addEventListener(
   "input",
@@ -692,123 +344,137 @@ sender.addEventListener(
 
 
 /* ==========================
-   NOTIFICATIONS
+   PERMISSION
 ========================== */
 
-allowNotifications.addEventListener(
-  "click",
-  async function(){
+permissionButton.onclick =
+async function(){
 
-    if(
-      !("Notification" in window)
-    ){
+  if(!("Notification" in window)){
 
-      status.textContent =
-        "❌ Notifications unavailable.";
+    status.textContent =
+      "❌ Notifications are not supported.";
 
-      return;
-    }
-
-
-    const permission =
-      await Notification.requestPermission();
-
-
-    if(
-      permission === "granted"
-    ){
-
-      status.textContent =
-        "✅ Notifications allowed.";
-
-    }else{
-
-      status.textContent =
-        "❌ Notifications denied.";
-    }
-
+    return;
   }
-);
+
+  const result =
+    await Notification.requestPermission();
+
+  if(result === "granted"){
+
+    status.textContent =
+      "✅ Notification permission granted.";
+
+  }else{
+
+    status.textContent =
+      "❌ Notification permission denied.";
+  }
+};
 
 
 /* ==========================
-   NOTIFICATION
+   SEND NOTIFICATION
 ========================== */
 
-async function notify(){
+async function sendNotification(){
 
   if(
     !("Notification" in window)
-  ) return;
-
+  ){
+    return;
+  }
 
   if(
-    Notification.permission !==
-    "granted"
-  ) return;
-
+    Notification.permission !== "granted"
+  ){
+    status.textContent =
+      "❌ Notifications are not allowed.";
+    return;
+  }
 
   const money =
     Number(amount.value || 0)
-      .toLocaleString("en-IN");
+    .toLocaleString("en-IN");
 
-  const name =
+  const person =
     sender.value.trim() ||
     "Customer";
 
 
+  const title =
+    "💰 Demo Payment Received";
+
+
+  const message =
+    "₹" +
+    money +
+    " received from " +
+    person +
+    "\n\n" +
+    "DEMO / PRANK — NOT A REAL PAYMENT";
+
+
   try{
 
-    const registration =
-      await navigator
-        .serviceWorker
-        .ready;
+    if("serviceWorker" in navigator){
 
+      const registration =
+        await navigator.serviceWorker.ready;
 
-    registration.showNotification(
-      "💰 Demo Payment Received",
-      {
+      await registration.showNotification(
+        title,
+        {
+          body:message,
 
-        body:
-          "₹" +
-          money +
-          " received from " +
-          name +
-          "\n\n" +
-          "DEMO / PRANK — NOT A REAL PAYMENT",
+          tag:
+            "demo-payment-" +
+            Date.now(),
 
-        tag:
-          "demo-payment-" +
-          Date.now()
+          requireInteraction:false,
 
-      }
-    );
+          data:{
+            demo:true
+          }
+        }
+      );
+
+    }else{
+
+      new Notification(
+        title,
+        {
+          body:message
+        }
+      );
+    }
 
   }catch(error){
 
     console.error(error);
+
+    status.textContent =
+      "❌ Notification failed.";
   }
 }
 
 
 /* ==========================
-   PAYMENT ALERT
+   SEND ONE
 ========================== */
 
-function paymentAlert(){
+async function sendOne(){
 
-  beep();
+  sent++;
 
-  notify();
+  await sendNotification();
 
-  setTimeout(
-    function(){
-
-      speak();
-
-    },
-    700
-  );
+  status.textContent =
+    "🟢 Sent notification " +
+    sent +
+    " of " +
+    count.value;
 }
 
 
@@ -818,44 +484,55 @@ function paymentAlert(){
 
 async function start(){
 
-  if(running) return;
+  if(running){
+    return;
+  }
 
-
-  /*
-    Unlock audio from the
-    user's button click.
-  */
-
-  getAudio();
-
-
-  /*
-    Notification permission.
-  */
 
   if(
-    "Notification" in window &&
-    Notification.permission !==
-    "granted"
+    !("Notification" in window)
+  ){
+
+    status.textContent =
+      "❌ Browser notifications unavailable.";
+
+    return;
+  }
+
+
+  if(
+    Notification.permission !== "granted"
   ){
 
     const permission =
       await Notification.requestPermission();
 
-
-    if(
-      permission !== "granted"
-    ){
+    if(permission !== "granted"){
 
       status.textContent =
-        "❌ Please allow notifications.";
+        "❌ Please allow notifications first.";
 
       return;
     }
   }
 
 
+  const seconds =
+    Math.max(
+      1,
+      Number(interval.value)
+    );
+
+
+  const total =
+    Math.max(
+      1,
+      Number(count.value)
+    );
+
+
   running = true;
+  sent = 0;
 
 
   startButton.style.display =
@@ -865,61 +542,93 @@ async function start(){
     "block";
 
 
-  status.textContent =
-    "🟢 Alert system started";
-
-
   /*
-    First alert.
+    Send first notification immediately.
   */
 
-  paymentAlert();
+  await sendOne();
 
 
-  secondsLeft =
-    Number(interval.value) / 1000;
+  if(total <= 1){
+
+    stop();
+
+    return;
+  }
+
+
+  secondsLeft = seconds;
 
 
   timer.textContent =
-    "Next alert in " +
+    "Next notification in " +
     secondsLeft +
     " seconds";
 
 
   /*
-    Repeat.
+    Repeat notification.
   */
 
-  alertInterval =
+  timerID =
     setInterval(
-      function(){
+      async function(){
 
-        paymentAlert();
+        if(!running){
+          return;
+        }
 
-        secondsLeft =
-          Number(interval.value) / 1000;
+
+        if(sent >= total){
+
+          stop();
+
+          return;
+        }
+
+
+        await sendOne();
+
+
+        secondsLeft = seconds;
 
       },
-      Number(interval.value)
+      seconds * 1000
     );
 
 
   /*
-    Countdown.
+    Countdown display.
   */
 
-  countdownInterval =
+  countdownID =
     setInterval(
       function(){
 
+        if(!running){
+          return;
+        }
+
+
         secondsLeft--;
+
 
         if(secondsLeft < 0){
           secondsLeft = 0;
         }
 
+
+        if(sent >= total){
+
+          timer.textContent =
+            "All notifications sent.";
+
+          return;
+        }
+
+
         timer.textContent =
-          "Next alert in " +
+          "Next notification in " +
           secondsLeft +
           " seconds";
 
@@ -938,25 +647,12 @@ function stop(){
   running = false;
 
 
-  clearInterval(
-    alertInterval
-  );
-
-  clearInterval(
-    countdownInterval
-  );
+  clearInterval(timerID);
+  clearInterval(countdownID);
 
 
-  alertInterval = null;
-  countdownInterval = null;
-
-
-  if(
-    "speechSynthesis" in window
-  ){
-
-    speechSynthesis.cancel();
-  }
+  timerID = null;
+  countdownID = null;
 
 
   startButton.style.display =
@@ -967,63 +663,38 @@ function stop(){
 
 
   timer.textContent =
-    "No alerts running";
+    "Notifications stopped.";
 
 
   status.textContent =
-    "🔴 Alerts stopped.";
+    "🔴 Stopped.";
 }
 
 
-/* ==========================
-   BUTTONS
-========================== */
-
-startButton.addEventListener(
-  "click",
-  start
-);
-
-stopButton.addEventListener(
-  "click",
-  stop
-);
+stopButton.onclick = stop;
 
 
 /* ==========================
    SERVICE WORKER
 ========================== */
 
-if(
-  "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
   navigator.serviceWorker
     .register("sw.js")
+    .then(
+      () =>
+        console.log(
+          "Service worker registered."
+        )
+    )
     .catch(
       error =>
-        console.error(error)
+        console.error(
+          "SW error:",
+          error
+        )
     );
-}
-
-
-/* ==========================
-   LOAD VOICES
-========================== */
-
-if(
-  "speechSynthesis" in window
-){
-
-  speechSynthesis.onvoiceschanged =
-    function(){
-
-      console.log(
-        "Voices loaded:",
-        speechSynthesis.getVoices()
-      );
-
-    };
 }
 
 
