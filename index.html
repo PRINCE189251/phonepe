@@ -412,9 +412,8 @@ function speakPayment(item) {
        5000 rupees received on PhonePe.
     ===================================== */
 
-    const message =
-        money +
-        " rupees received on PhonePe.";
+  const message =
+    money + " rupees received by " + item.name + ".";
 
 
     console.log(
@@ -603,7 +602,7 @@ async function sendNotification(item) {
 
 
         const body =
-            "DEMO / PRANK — NOT A REAL PAYMENT\n\n" +
+            "Phonepe\n\n" +
             "₹" +
             money +
             " received on PhonePe";
@@ -614,14 +613,14 @@ async function sendNotification(item) {
         await registration
         .showNotification(
 
-            "💰 Demo Payment Received",
+            "💰Phonepe",
 
             {
 
                 body: body,
 
                 tag:
-                "demo-payment-" +
+                "Phonepe-" +
                 Date.now(),
 
                 data: {
