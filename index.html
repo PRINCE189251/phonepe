@@ -1,297 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Payment Voice Alert</title>
+<title>Payment Prank Simulator</title>
 
-  <link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f2fb;
-      color: #17121f;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f1fa;
+  color: #17121f;
+}
 
-    .header {
-      background: linear-gradient(135deg, #5b20d6, #7b35ef);
-      color: white;
-      padding: 28px 20px 75px;
-    }
+.header {
+  background: linear-gradient(135deg, #5b20d6, #843cff);
+  color: white;
+  padding: 30px 20px 75px;
+}
 
-    .header-content {
-      max-width: 520px;
-      margin: auto;
-    }
+.header-content {
+  max-width: 520px;
+  margin: auto;
+}
 
-    .badge {
-      display: inline-block;
-      background: #ffffff25;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
+.badge {
+  display: inline-block;
+  background: #ffffff30;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
 
-    h1 {
-      margin: 12px 0 5px;
-      font-size: 27px;
-    }
+h1 {
+  margin: 12px 0 5px;
+}
 
-    .subtitle {
-      opacity: 0.9;
-    }
+.subtitle {
+  opacity: .9;
+}
 
-    .container {
-      max-width: 520px;
-      margin: -45px auto 30px;
-      padding: 0 16px;
-    }
+.container {
+  max-width: 520px;
+  margin: -45px auto 30px;
+  padding: 0 16px;
+}
 
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 24px;
-      box-shadow: 0 15px 40px #30145c22;
-    }
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 15px 40px #30145c22;
+}
 
-    .payment {
-      background: #faf8ff;
-      border-radius: 20px;
-      padding: 22px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.demo {
+  background: #fff5d8;
+  border: 1px solid #f0d27b;
+  padding: 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
 
-    .tick {
-      width: 60px;
-      height: 60px;
-      margin: auto;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #e8ddff;
-      color: #5b20d6;
-      font-size: 30px;
-      font-weight: bold;
-    }
+.payment {
+  background: #faf8ff;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+}
 
-    .amount {
-      font-size: 38px;
-      font-weight: 800;
-      margin-top: 12px;
-    }
+.tick {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  border-radius: 50%;
+  background: #e8ddff;
+  color: #5b20d6;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  font-weight: bold;
+}
 
-    .received {
-      font-size: 18px;
-      font-weight: bold;
-    }
+.amount {
+  font-size: 38px;
+  font-weight: 800;
+  margin-top: 10px;
+}
 
-    .sender-preview {
-      color: #706b78;
-      margin-top: 6px;
-    }
+.received {
+  font-size: 18px;
+  font-weight: bold;
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 16px 0 7px;
-    }
+.preview {
+  color: #777;
+  margin-top: 5px;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd6e8;
-      border-radius: 12px;
-      font-size: 16px;
-    }
+label {
+  display: block;
+  margin-top: 17px;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
 
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+input,
+select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd6e8;
+  border-radius: 12px;
+  font-size: 16px;
+}
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 16px;
-    }
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 
-    .primary {
-      background: #5b20d6;
-      color: white;
-    }
+button {
+  width: 100%;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 16px;
+}
 
-    .secondary {
-      background: #eee8fa;
-      color: #5b20d6;
-    }
+.primary {
+  background: #5b20d6;
+  color: white;
+}
 
-    .status {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 12px;
-      background: #f6f4f8;
-      color: #514b59;
-      font-size: 14px;
-    }
+.secondary {
+  background: #eee8fa;
+  color: #5b20d6;
+}
 
-    .note {
-      margin-top: 17px;
-      color: #77717d;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-  </style>
+.stop {
+  background: #e53935;
+  color: white;
+  display: none;
+}
+
+.status {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f5f3f7;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.timer {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 12px;
+  color: #666;
+}
+</style>
 </head>
 
 <body>
 
-  <header class="header">
-    <div class="header-content">
-
-      <span class="badge">DEMO</span>
-
-      <h1>Payment Voice Alert</h1>
-
-      <div class="subtitle">
-        Payment notification + voice announcement
-      </div>
-
+<header class="header">
+  <div class="header-content">
+    <span class="badge">DEMO / PRANK</span>
+    <h1>Payment Prank Simulator</h1>
+    <div class="subtitle">
+      Notification & voice simulation
     </div>
-  </header>
+  </div>
+</header>
 
+<main class="container">
 
-  <main class="container">
+<section class="card">
 
-    <section class="card">
+<div class="demo">
+  ⚠️ <b>Simulation only</b><br>
+  This is not a real payment and does not verify any bank or UPI transaction.
+</div>
 
-      <div class="payment">
+<div class="payment">
 
-        <div class="tick">✓</div>
+  <div class="tick">✓</div>
 
-        <div class="amount" id="amountPreview">
-          ₹5,000
-        </div>
+  <div class="amount" id="amountPreview">
+    ₹5,000
+  </div>
 
-        <div class="received">
-          Payment Received
-        </div>
+  <div class="received">
+    Demo Payment Received
+  </div>
 
-        <div class="sender-preview" id="senderPreview">
-          From: Customer
-        </div>
+  <div class="preview" id="senderPreview">
+    From: Customer
+  </div>
 
-      </div>
+</div>
 
+<label>Amount</label>
 
-      <label>Amount received (₹)</label>
+<input
+  id="amount"
+  type="number"
+  value="5000"
+  min="1"
+>
 
-      <input
-        id="amount"
-        type="number"
-        value="5000"
-        min="1"
-      >
+<label>Sender name</label>
 
+<input
+  id="sender"
+  type="text"
+  value="Customer"
+>
 
-      <label>Sender name</label>
+<label>Interval</label>
 
-      <input
-        id="sender"
-        type="text"
-        value="Customer"
-        placeholder="Customer"
-      >
+<select id="interval">
 
+  <option value="10000">Every 10 seconds</option>
+  <option value="30000">Every 30 seconds</option>
+  <option value="60000">Every 1 minute</option>
+  <option value="300000">Every 5 minutes</option>
 
-      <label>Voice language</label>
+</select>
 
-      <select id="language">
+<label>Voice</label>
 
-        <option value="hi-IN">
-          Hindi — रुपये प्राप्त हुए
-        </option>
+<select id="language">
 
-        <option value="en-IN">
-          English — rupees received
-        </option>
+  <option value="hi-IN">
+    Hindi
+  </option>
 
-      </select>
+  <option value="en-IN">
+    English
+  </option>
 
+</select>
 
-      <div class="buttons">
+<div class="buttons">
 
-        <button
-          class="secondary"
-          id="voiceButton"
-        >
-          🔊 Test Voice
-        </button>
+  <button
+    class="secondary"
+    id="voiceButton">
+    🔊 Test Voice
+  </button>
 
+  <button
+    class="secondary"
+    id="notificationButton">
+    🔔 Allow Notifications
+  </button>
 
-        <button
-          class="secondary"
-          id="notificationButton"
-        >
-          🔔 Allow Notifications
-        </button>
+</div>
 
-      </div>
+<button
+  class="primary"
+  id="startButton">
+  ▶️ Start Prank
+</button>
 
+<button
+  class="stop"
+  id="stopButton">
+  ⏹️ Stop
+</button>
 
-      <button
-        class="primary"
-        id="alertButton"
-      >
-        💰 Simulate Payment Alert
-      </button>
+<div class="status" id="status">
+  Ready
+</div>
 
+<div class="timer" id="timer">
+  Alerts are stopped
+</div>
 
-      <div
-        class="status"
-        id="status"
-      >
-        Checking notification permission...
-      </div>
+</section>
 
-
-      <div class="note">
-
-        This is a payment-alert demonstration.
-        It does not verify a real bank or UPI transaction.
-
-      </div>
-
-    </section>
-
-  </main>
-
+</main>
 
 <script>
 
-const amount =
-  document.getElementById("amount");
-
-const sender =
-  document.getElementById("sender");
-
-const language =
-  document.getElementById("language");
+const amount = document.getElementById("amount");
+const sender = document.getElementById("sender");
+const interval = document.getElementById("interval");
+const language = document.getElementById("language");
 
 const amountPreview =
   document.getElementById("amountPreview");
@@ -302,37 +309,38 @@ const senderPreview =
 const status =
   document.getElementById("status");
 
+const timer =
+  document.getElementById("timer");
 
+const startButton =
+  document.getElementById("startButton");
+
+const stopButton =
+  document.getElementById("stopButton");
+
+let alertTimer = null;
+let countdownTimer = null;
+let remainingSeconds = 0;
+
+
+/* -------------------------
+   PREVIEW
+------------------------- */
 
 function getAmount() {
 
-  return Number(
-    amount.value || 0
-  ).toLocaleString("en-IN");
+  const value = Number(amount.value || 0);
+
+  return value.toLocaleString("en-IN");
 
 }
 
 
+function getSender() {
 
-function getMessage() {
-
-  const money = getAmount();
-
-  const person =
-    sender.value.trim() || "Customer";
-
-
-  if (language.value === "hi-IN") {
-
-    return `${person} से ${money} रुपये प्राप्त हुए`;
-
-  }
-
-
-  return `Payment received from ${person}. ${money} rupees received`;
+  return sender.value.trim() || "Customer";
 
 }
-
 
 
 function updatePreview() {
@@ -341,24 +349,33 @@ function updatePreview() {
     "₹" + getAmount();
 
   senderPreview.textContent =
-    "From: " +
-    (sender.value.trim() || "Customer");
+    "From: " + getSender();
 
 }
 
 
-
-amount.addEventListener(
-  "input",
-  updatePreview
-);
+amount.addEventListener("input", updatePreview);
+sender.addEventListener("input", updatePreview);
 
 
-sender.addEventListener(
-  "input",
-  updatePreview
-);
+/* -------------------------
+   MESSAGE
+------------------------- */
 
+function getMessage() {
+
+  const money = getAmount();
+  const person = getSender();
+
+  if (language.value === "hi-IN") {
+
+    return `${person} से ${money} रुपये प्राप्त हुए`;
+
+  }
+
+  return `Payment received from ${person}. ${money} rupees received`;
+
+}
 
 
 /* -------------------------
@@ -369,37 +386,27 @@ function speakPayment() {
 
   if (!("speechSynthesis" in window)) {
 
-    alert(
-      "Voice is not supported in this browser."
-    );
+    status.textContent =
+      "❌ Voice is not supported by this browser.";
 
     return;
+
   }
 
-
   speechSynthesis.cancel();
-
 
   const speech =
     new SpeechSynthesisUtterance(
       getMessage()
     );
 
-
-  speech.lang =
-    language.value;
-
-  speech.rate = 0.88;
-
+  speech.lang = language.value;
+  speech.rate = 0.85;
   speech.pitch = 1;
 
-
-  speechSynthesis.speak(
-    speech
-  );
+  speechSynthesis.speak(speech);
 
 }
-
 
 
 document
@@ -410,44 +417,226 @@ document
   );
 
 
-
 /* -------------------------
-   NOTIFICATION PERMISSION
+   NOTIFICATIONS
 ------------------------- */
 
-async function requestNotificationPermission() {
+async function allowNotifications() {
 
   if (!("Notification" in window)) {
 
     status.textContent =
-      "Notifications are not supported.";
+      "❌ Notifications are not supported.";
 
     return false;
-  }
 
+  }
 
   const permission =
     await Notification.requestPermission();
 
+  if (permission === "granted") {
+
+    status.textContent =
+      "✅ Notifications allowed.";
+
+    return true;
+
+  }
 
   status.textContent =
-    "Notification permission: " +
-    permission;
+    "❌ Notification permission denied.";
 
-
-  return permission === "granted";
+  return false;
 
 }
-
 
 
 document
   .getElementById("notificationButton")
   .addEventListener(
     "click",
-    requestNotificationPermission
+    allowNotifications
   );
 
+
+/* -------------------------
+   SHOW NOTIFICATION
+------------------------- */
+
+async function sendNotification() {
+
+  if (
+    !("Notification" in window) ||
+    Notification.permission !== "granted"
+  ) {
+
+    return;
+
+  }
+
+  const registration =
+    await navigator.serviceWorker.ready;
+
+  registration.showNotification(
+    "💰 Demo Payment Received",
+    {
+
+      body:
+        `₹${getAmount()} received from ${getSender()}\n` +
+        `⚠️ DEMO / PRANK — NOT A REAL PAYMENT`,
+
+      tag:
+        "demo-payment-" + Date.now(),
+
+      vibrate: [
+        200,
+        100,
+        200
+      ]
+
+    }
+  );
+
+}
+
+
+/* -------------------------
+   ONE ALERT
+------------------------- */
+
+function makeAlert() {
+
+  sendNotification();
+
+  /*
+    Voice is attempted while the page
+    is active. Browsers may block
+    automatic speech after some time.
+  */
+
+  speakPayment();
+
+}
+
+
+/* -------------------------
+   COUNTDOWN
+------------------------- */
+
+function startCountdown() {
+
+  clearInterval(countdownTimer);
+
+  remainingSeconds =
+    Number(interval.value) / 1000;
+
+  countdownTimer =
+    setInterval(() => {
+
+      remainingSeconds--;
+
+      if (remainingSeconds <= 0) {
+
+        remainingSeconds =
+          Number(interval.value) / 1000;
+
+      }
+
+      timer.textContent =
+        "Next demo alert in " +
+        remainingSeconds +
+        " seconds";
+
+    }, 1000);
+
+}
+
+
+/* -------------------------
+   START
+------------------------- */
+
+async function startPrank() {
+
+  if ("Notification" in window) {
+
+    if (
+      Notification.permission !== "granted"
+    ) {
+
+      const allowed =
+        await allowNotifications();
+
+      if (!allowed) return;
+
+    }
+
+  }
+
+  if (alertTimer) {
+
+    clearInterval(alertTimer);
+
+  }
+
+  makeAlert();
+
+  alertTimer =
+    setInterval(
+      makeAlert,
+      Number(interval.value)
+    );
+
+  startCountdown();
+
+  startButton.style.display =
+    "none";
+
+  stopButton.style.display =
+    "block";
+
+  status.textContent =
+    "🟢 Demo alerts are running.";
+
+}
+
+
+/* -------------------------
+   STOP
+------------------------- */
+
+function stopPrank() {
+
+  clearInterval(alertTimer);
+  clearInterval(countdownTimer);
+
+  alertTimer = null;
+
+  timer.textContent =
+    "Alerts are stopped";
+
+  status.textContent =
+    "🔴 Demo alerts stopped.";
+
+  startButton.style.display =
+    "block";
+
+  stopButton.style.display =
+    "none";
+
+}
+
+
+startButton.addEventListener(
+  "click",
+  startPrank
+);
+
+stopButton.addEventListener(
+  "click",
+  stopPrank
+);
 
 
 /* -------------------------
@@ -456,116 +645,39 @@ document
 
 async function registerServiceWorker() {
 
-  if ("serviceWorker" in navigator) {
+  if (!("serviceWorker" in navigator)) {
 
-    try {
+    status.textContent =
+      "Service Worker unavailable.";
 
-      await navigator.serviceWorker.register(
-        "sw.js"
-      );
-
-      console.log(
-        "Service Worker registered"
-      );
-
-    } catch (error) {
-
-      console.error(
-        "Service Worker error:",
-        error
-      );
-
-    }
+    return;
 
   }
 
-}
+  try {
 
-
-
-/* -------------------------
-   PAYMENT ALERT
-------------------------- */
-
-async function paymentAlert() {
-
-  if ("Notification" in window) {
-
-    if (
-      Notification.permission !==
-      "granted"
-    ) {
-
-      const allowed =
-        await requestNotificationPermission();
-
-      if (!allowed) {
-
-        speakPayment();
-
-        return;
-      }
-
-    }
-
-
-    const registration =
-      await navigator.serviceWorker.ready;
-
-
-    registration.showNotification(
-      "Payment Received 💰",
-      {
-        body: getMessage(),
-
-        tag: "payment-alert",
-
-        vibrate: [
-          200,
-          100,
-          200
-        ],
-
-        data: {
-          amount: getAmount()
-        }
-      }
+    await navigator.serviceWorker.register(
+      "sw.js"
     );
 
+    console.log(
+      "Service Worker registered"
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.textContent =
+      "Service Worker registration failed.";
+
   }
 
-
-  speakPayment();
-
 }
 
-
-
-document
-  .getElementById("alertButton")
-  .addEventListener(
-    "click",
-    paymentAlert
-  );
-
-
-
-/* -------------------------
-   START
-------------------------- */
 
 updatePreview();
-
 registerServiceWorker();
-
-
-if ("Notification" in window) {
-
-  status.textContent =
-    "Notification permission: " +
-    Notification.permission;
-
-}
 
 </script>
 
