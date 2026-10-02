@@ -4,925 +4,890 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Demo Notification Scheduler</title>
+<title>Demo Payment Scheduler</title>
 
 <style>
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f1fa;
-  color:#18121f;
-}
-
-header{
-  background:linear-gradient(135deg,#5b20d6,#843cff);
-  color:white;
-  padding:30px 20px 70px;
-}
-
-.header{
-  max-width:650px;
-  margin:auto;
-}
-
-.badge{
-  display:inline-block;
-  background:#ffffff30;
-  padding:7px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f8;
+    color:#222;
 }
 
 .container{
-  max-width:650px;
-  margin:-40px auto 30px;
-  padding:0 15px;
+    max-width:850px;
+    margin:30px auto;
+    padding:20px;
 }
 
 .card{
-  background:white;
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 15px 40px #30145c22;
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
 }
 
-.demo{
-  background:#fff5d8;
-  border:1px solid #f0d27b;
-  padding:14px;
-  border-radius:14px;
-  font-size:13px;
-  margin-bottom:20px;
+h1{
+    margin-top:0;
+    text-align:center;
 }
 
-h2{
-  margin-top:0;
-}
-
-.schedule{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+.warning{
+    background:#fff3cd;
+    border:1px solid #ffe08a;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:20px;
 }
 
 .row{
-  background:#faf8ff;
-  border:1px solid #e5def0;
-  padding:14px;
-  border-radius:16px;
-}
-
-.row-title{
-  font-weight:bold;
-  margin-bottom:10px;
-  color:#5b20d6;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:90px 1fr 100px;
-  gap:8px;
+    display:grid;
+    grid-template-columns:100px 1fr 140px 70px;
+    gap:10px;
+    margin-bottom:10px;
 }
 
 input{
-  width:100%;
-  padding:11px;
-  border:1px solid #ddd6e8;
-  border-radius:10px;
-  font-size:15px;
-}
-
-.remove{
-  width:100%;
-  background:#ffe5e5;
-  color:#d32f2f;
-  border:0;
-  padding:10px;
-  border-radius:10px;
-  font-weight:bold;
-  margin-top:8px;
-  cursor:pointer;
-}
-
-.add{
-  background:#eee8fa;
-  color:#5b20d6;
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    font-size:15px;
 }
 
 button{
-  width:100%;
-  border:0;
-  padding:14px;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:14px;
+    border:0;
+    padding:12px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-.primary{
-  background:#5b20d6;
-  color:white;
+.add{
+    background:#e8f0fe;
+}
+
+.start{
+    background:#16a34a;
+    color:white;
 }
 
 .stop{
-  background:#e53935;
-  color:white;
-  display:none;
+    background:#dc2626;
+    color:white;
 }
 
-.secondary{
-  background:#eee8fa;
-  color:#5b20d6;
+.test{
+    background:#7c3aed;
+    color:white;
 }
 
-.status{
-  margin-top:16px;
-  background:#f5f3f7;
-  padding:12px;
-  border-radius:12px;
-  font-size:14px;
+.remove{
+    background:#fee2e2;
+    color:#b91c1c;
 }
 
-.timer{
-  text-align:center;
-  margin-top:10px;
-  color:#666;
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
 }
 
-@media(max-width:500px){
+#status{
+    margin-top:20px;
+    padding:14px;
+    background:#f1f5f9;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+}
 
-  .grid{
-    grid-template-columns:80px 1fr;
-  }
+#countdown{
+    text-align:center;
+    margin-top:10px;
+    font-size:18px;
+}
 
-  .grid input:nth-child(3){
-    grid-column:1 / -1;
-  }
+@media(max-width:650px){
+
+    .row{
+        grid-template-columns:1fr;
+        padding:15px;
+        background:#f8fafc;
+        border-radius:12px;
+    }
+
+    .remove{
+        width:100%;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<div class="container">
 
-<div class="header">
+<div class="card">
 
-<span class="badge">
-DEMO / PRANK
-</span>
+<h1>💰 Demo Payment Scheduler</h1>
 
-<h1>
-Notification Scheduler
-</h1>
+<div class="warning">
+DEMO / PRANK — NOT A REAL PAYMENT
+</div>
 
-<p>
-Create different demo notifications at different times.
-</p>
+<h3>Notifications</h3>
+
+<div id="schedule"></div>
+
+<button class="add" onclick="addRow()">
+➕ Add Notification
+</button>
+
+<div class="buttons">
+
+<button onclick="allowNotifications()">
+🔔 Allow Notifications
+</button>
+
+<button class="test" onclick="testVoice()">
+🔊 Test Voice
+</button>
+
+<button class="start" onclick="startSchedule()">
+▶️ Start
+</button>
+
+<button class="stop" onclick="stopSchedule()">
+⏹️ Stop
+</button>
 
 </div>
 
-</header>
-
-
-<main class="container">
-
-<section class="card">
-
-<div class="demo">
-
-⚠️ <b>SIMULATION ONLY</b>
-
-<br><br>
-
-These notifications are only a demo/prank simulation.
-They are not real payments or bank transactions.
-
-</div>
-
-
-<h2>
-Notification Schedule
-</h2>
-
-
-<div
-id="schedule"
-class="schedule">
-</div>
-
-
-<button
-id="addButton"
-class="add">
-➕ ADD NOTIFICATION
-</button>
-
-
-<button
-id="permissionButton"
-class="secondary">
-🔔 ALLOW NOTIFICATIONS
-</button>
-
-
-<button
-id="startButton"
-class="primary">
-▶️ START SCHEDULE
-</button>
-
-
-<button
-id="stopButton"
-class="stop">
-⏹️ STOP
-</button>
-
-
-<div
-id="status"
-class="status">
+<div id="status">
 Ready
 </div>
 
-
-<div
-id="timer"
-class="timer">
-No schedule running
+<div id="countdown">
 </div>
 
-</section>
-
-</main>
+</div>
+</div>
 
 
 <script>
 
-/* ==========================
-   ELEMENTS
-========================== */
+/* =================================
+   GLOBAL VARIABLES
+================================= */
 
-const schedule =
-document.getElementById("schedule");
-
-const addButton =
-document.getElementById("addButton");
-
-const permissionButton =
-document.getElementById("permissionButton");
-
-const startButton =
-document.getElementById("startButton");
-
-const stopButton =
-document.getElementById("stopButton");
-
-const status =
-document.getElementById("status");
-
-const timer =
-document.getElementById("timer");
-
+let timers = [];
 
 let running = false;
 
-let scheduledTimers = [];
-
-let countdownTimer = null;
-
-let scheduleRows = [];
+let startTime = 0;
 
 
-/* ==========================
+/* =================================
+   DEFAULT ROWS
+================================= */
+
+const defaultRows = [
+
+    {
+        time:15,
+        name:"Prince",
+        amount:"3000"
+    },
+
+    {
+        time:17,
+        name:"Nancy",
+        amount:"5000"
+    },
+
+    {
+        time:30,
+        name:"Rahul",
+        amount:"2000"
+    }
+
+];
+
+
+/* =================================
    ADD ROW
-========================== */
+================================= */
 
-function addNotification(
-  time = 15,
-  name = "Prince",
-  amount = 3000
+function addRow(
+    time = "",
+    name = "",
+    amount = ""
 ){
 
-  const id =
-    Date.now() +
-    Math.random();
+    const container =
+        document.getElementById("schedule");
+
+    const row =
+        document.createElement("div");
+
+    row.className = "row";
+
+    row.innerHTML = `
+
+        <input
+            class="time"
+            type="number"
+            min="0"
+            placeholder="Seconds"
+            value="${time}"
+        >
+
+        <input
+            class="name"
+            type="text"
+            placeholder="Sender name"
+            value="${name}"
+        >
+
+        <input
+            class="amount"
+            type="number"
+            min="0"
+            placeholder="Amount"
+            value="${amount}"
+        >
+
+        <button
+            class="remove"
+            onclick="this.parentElement.remove()"
+        >
+            🗑️
+        </button>
+
+    `;
+
+    container.appendChild(row);
+}
 
 
-  const row =
-    document.createElement("div");
+/* =================================
+   LOAD DEFAULTS
+================================= */
 
-  row.className =
-    "row";
+defaultRows.forEach(item => {
 
-  row.dataset.id =
-    id;
+    addRow(
+        item.time,
+        item.name,
+        item.amount
+    );
 
-
-  row.innerHTML = `
-
-    <div class="row-title">
-      Notification ${schedule.children.length + 1}
-    </div>
-
-    <div class="grid">
-
-      <input
-        class="time"
-        type="number"
-        min="1"
-        value="${time}"
-        placeholder="Seconds"
-        title="Seconds after START"
-      >
-
-      <input
-        class="name"
-        type="text"
-        value="${name}"
-        placeholder="Sender name"
-      >
-
-      <input
-        class="amount"
-        type="number"
-        min="1"
-        value="${amount}"
-        placeholder="Amount"
-      >
-
-    </div>
-
-    <button
-      class="remove"
-      type="button">
-      🗑 REMOVE
-    </button>
-
-  `;
+});
 
 
-  const remove =
-    row.querySelector(".remove");
+/* =================================
+   GET SCHEDULE
+================================= */
+
+function getSchedule(){
+
+    const rows =
+        document.querySelectorAll(".row");
+
+    const schedule = [];
+
+    rows.forEach(row => {
+
+        const time =
+            Number(
+                row.querySelector(".time").value
+            );
+
+        const name =
+            row.querySelector(".name").value.trim();
+
+        const amount =
+            row.querySelector(".amount").value;
+
+        if(
+            !isNaN(time) &&
+            time >= 0 &&
+            name !== "" &&
+            amount !== ""
+        ){
+
+            schedule.push({
+
+                time:time,
+                name:name,
+                amount:amount
+
+            });
+
+        }
+
+    });
+
+    schedule.sort(
+        (a,b) => a.time - b.time
+    );
+
+    return schedule;
+}
 
 
-  remove.onclick =
-    function(){
+/* =================================
+   ALLOW NOTIFICATIONS
+================================= */
 
-      row.remove();
+async function allowNotifications(){
 
-      renumberRows();
+    if(
+        !("Notification" in window)
+    ){
+
+        alert(
+            "This browser does not support notifications."
+        );
+
+        return;
+    }
+
+    const permission =
+        await Notification.requestPermission();
+
+    if(permission === "granted"){
+
+        document.getElementById("status")
+        .textContent =
+        "🔔 Notifications allowed";
+
+    }
+
+    else{
+
+        document.getElementById("status")
+        .textContent =
+        "❌ Notification permission denied";
+
+    }
+
+}
+
+
+/* =================================
+   SPEECH VOICE
+================================= */
+
+function speakPayment(item){
+
+    if(
+        !("speechSynthesis" in window)
+    ){
+
+        console.log(
+            "Speech synthesis not supported"
+        );
+
+        return;
+
+    }
+
+
+    const money =
+        Number(item.amount)
+        .toLocaleString("en-IN");
+
+
+    const message =
+        money +
+        " rupees received from " +
+        item.name;
+
+
+    console.log(
+        "Trying to speak:",
+        message
+    );
+
+
+    /* Stop previous speech */
+
+    window.speechSynthesis.cancel();
+
+
+    const voice =
+        new SpeechSynthesisUtterance(
+            message
+        );
+
+
+    voice.lang = "en-IN";
+
+    voice.rate = 0.85;
+
+    voice.pitch = 1;
+
+    voice.volume = 1;
+
+
+    /* Find Indian English voice */
+
+    const voices =
+        window.speechSynthesis
+        .getVoices();
+
+
+    const indianVoice =
+        voices.find(
+            v =>
+            v.lang
+            .toLowerCase()
+            .startsWith("en-in")
+        );
+
+
+    if(indianVoice){
+
+        voice.voice =
+            indianVoice;
+
+        console.log(
+            "Using voice:",
+            indianVoice.name
+        );
+
+    }
+
+
+    voice.onstart = function(){
+
+        document.getElementById(
+            "status"
+        ).textContent =
+        "🔊 Speaking: " +
+        message;
 
     };
 
 
-  schedule.appendChild(row);
+    voice.onend = function(){
 
-}
+        document.getElementById(
+            "status"
+        ).textContent =
+        "🔔 Notification sent";
 
-
-/* ==========================
-   RENUMBER
-========================== */
-
-function renumberRows(){
-
-  const rows =
-    schedule.querySelectorAll(".row");
+    };
 
 
-  rows.forEach(
-    (row,index) => {
+    voice.onerror = function(event){
 
-      row.querySelector(
-        ".row-title"
-      ).textContent =
-        "Notification " +
-        (index + 1);
-
-    }
-  );
-
-}
-
-
-/* ==========================
-   GET SCHEDULE
-========================== */
-
-function getSchedule(){
-
-  const rows =
-    schedule.querySelectorAll(".row");
-
-  const data = [];
-
-
-  rows.forEach(
-    row => {
-
-      const time =
-        Number(
-          row.querySelector(".time").value
+        console.log(
+            "VOICE ERROR:",
+            event.error
         );
 
-      const name =
-        row.querySelector(".name")
-        .value
-        .trim();
+        document.getElementById(
+            "status"
+        ).textContent =
+        "⚠️ Voice error: " +
+        event.error;
 
-      const amount =
-        Number(
-          row.querySelector(".amount").value
-        );
+    };
 
 
-      if(
-        time > 0 &&
-        name &&
-        amount > 0
-      ){
+    window.speechSynthesis.speak(
+        voice
+    );
 
-        data.push({
-
-          time:time,
-
-          name:name,
-
-          amount:amount
-
-        });
-
-      }
-
-    }
-  );
-
-
-  /*
-    Sort by time.
-  */
-
-  data.sort(
-    (a,b) =>
-      a.time - b.time
-  );
-
-
-  return data;
 }
 
 
-/* ==========================
-   PERMISSION
-========================== */
+/* =================================
+   TEST VOICE
+================================= */
 
-permissionButton.onclick =
-async function(){
+function testVoice(){
 
-  if(
-    !("Notification" in window)
-  ){
+    const testItem = {
 
-    status.textContent =
-      "❌ Notifications are not supported.";
+        name:"Prince",
 
-    return;
-  }
+        amount:"3000"
+
+    };
 
 
-  const result =
-    await Notification.requestPermission();
+    speakPayment(testItem);
+
+}
 
 
-  if(
-    result === "granted"
-  ){
+/* =================================
+   LOAD VOICES
+================================= */
 
-    status.textContent =
-      "✅ Notifications allowed.";
-
-  }else{
-
-    status.textContent =
-      "❌ Notification permission denied.";
-
-  }
-
-};
-
-
-/* ==========================
-   SEND NOTIFICATION
-========================== */
-
-async function sendNotification(
-  item
+if(
+    "speechSynthesis" in window
 ){
 
-  if(
-    Notification.permission !==
-    "granted"
-  ){
+    window.speechSynthesis
+    .addEventListener(
+        "voiceschanged",
+        function(){
 
-    return;
-  }
+            console.log(
+                "Voices loaded:",
+                speechSynthesis
+                .getVoices()
+                .length
+            );
 
+        }
+    );
 
-  const money =
-    Number(item.amount)
-    .toLocaleString("en-IN");
-
-
-  const body =
-    "₹" +
-    money +
-    " demo payment received from " +
-    item.name +
-    "\n\n" +
-    "DEMO / PRANK — NOT A REAL PAYMENT";
+}
 
 
-  try{
+/* =================================
+   SEND NOTIFICATION
+================================= */
 
-    if(
-      "serviceWorker" in navigator
-    ){
+async function sendNotification(item){
 
-      const registration =
+    const registration =
         await navigator
         .serviceWorker
         .ready;
 
 
-      await registration.showNotification(
+    const money =
+        Number(item.amount)
+        .toLocaleString("en-IN");
+
+
+    const body =
+        "DEMO / PRANK — NOT A REAL PAYMENT\n\n" +
+        "₹" +
+        money +
+        " received from " +
+        item.name;
+
+
+    await registration
+    .showNotification(
 
         "💰 Demo Payment Received",
 
         {
 
-          body:body,
+            body:body,
 
-          tag:
+            tag:
             "demo-payment-" +
             Date.now(),
 
-          data:{
-            demo:true
-          }
+            data:{
+                demo:true
+            }
 
         }
 
-      );
-
-    }else{
-
-      new Notification(
-        "💰 Demo Payment Received",
-        {
-          body:body
-        }
-      );
-
-    }
+    );
 
 
-    status.textContent =
-      "🔔 Sent: ₹" +
-      money +
-      " from " +
-      item.name;
+    /* Speak after notification */
 
-
-  }catch(error){
-
-    console.error(error);
-
-    status.textContent =
-      "❌ Notification error.";
-
-  }
+    speakPayment(item);
 
 }
 
 
-/* ==========================
-   START
-========================== */
+/* =================================
+   START SCHEDULE
+================================= */
 
-async function start(){
+async function startSchedule(){
 
-  if(running){
-    return;
-  }
+    if(running){
 
+        return;
 
-  if(
-    !("Notification" in window)
-  ){
-
-    status.textContent =
-      "❌ Notifications unavailable.";
-
-    return;
-  }
+    }
 
 
-  if(
-    Notification.permission !==
-    "granted"
-  ){
+    const schedule =
+        getSchedule();
 
-    const permission =
-      await Notification.requestPermission();
+
+    if(schedule.length === 0){
+
+        alert(
+            "Please add at least one notification."
+        );
+
+        return;
+
+    }
 
 
     if(
-      permission !== "granted"
+        !("Notification" in window)
     ){
 
-      status.textContent =
-        "❌ Please allow notifications.";
+        alert(
+            "Notifications are not supported."
+        );
 
-      return;
+        return;
+
     }
 
-  }
+
+    if(
+        Notification.permission !==
+        "granted"
+    ){
+
+        const permission =
+            await Notification
+            .requestPermission();
 
 
-  const data =
-    getSchedule();
+        if(permission !== "granted"){
+
+            alert(
+                "Please allow notifications first."
+            );
+
+            return;
+
+        }
+
+    }
 
 
-  if(data.length === 0){
+    /* Make sure service worker exists */
 
-    status.textContent =
-      "❌ Add at least one notification.";
+    try{
 
-    return;
-  }
+        await navigator
+        .serviceWorker
+        .ready;
 
+    }
 
-  /*
-    Start.
-  */
+    catch(error){
 
-  running = true;
+        console.log(error);
 
-
-  startButton.style.display =
-    "none";
-
-  stopButton.style.display =
-    "block";
+    }
 
 
-  status.textContent =
-    "🟢 Schedule started.";
+    running = true;
+
+    startTime =
+        Date.now();
 
 
-  /*
-    Cancel any old timers.
-  */
-
-  scheduledTimers.forEach(
-    clearTimeout
-  );
-
-  scheduledTimers = [];
+    document.getElementById(
+        "status"
+    ).textContent =
+    "▶️ Schedule running";
 
 
-  /*
-    Find total duration.
-  */
-
-  const finalTime =
-    data[data.length - 1].time;
+    document.getElementById(
+        "countdown"
+    ).textContent =
+    "Waiting for first notification...";
 
 
-  /*
-    Create each notification timer.
-  */
+    /* Create timer for every row */
 
-  data.forEach(
-    item => {
+    schedule.forEach(item => {
 
-      const timerID =
-        setTimeout(
-          function(){
+        const timer =
+            setTimeout(
 
-            if(running){
+                function(){
 
-              sendNotification(item);
+                    if(!running){
 
-            }
+                        return;
 
-          },
-          item.time * 1000
+                    }
+
+
+                    sendNotification(item);
+
+
+                },
+
+                item.time * 1000
+
+            );
+
+
+        timers.push(timer);
+
+    });
+
+
+    /* Countdown */
+
+    updateCountdown(
+        schedule
+    );
+
+}
+
+
+/* =================================
+   COUNTDOWN
+================================= */
+
+function updateCountdown(schedule){
+
+    if(!running){
+
+        return;
+
+    }
+
+
+    const elapsed =
+        (Date.now() - startTime)
+        / 1000;
+
+
+    const remaining =
+        schedule
+        .filter(
+            item =>
+            item.time > elapsed
         );
 
 
-      scheduledTimers.push(
-        timerID
-      );
+    if(
+        remaining.length === 0
+    ){
+
+        document.getElementById(
+            "countdown"
+        ).textContent =
+        "✅ All notifications completed";
+
+        running = false;
+
+        return;
 
     }
-  );
 
 
-  /*
-    Countdown to next notification.
-  */
-
-  let startTime =
-    Date.now();
+    const next =
+        remaining[0];
 
 
-  countdownTimer =
-    setInterval(
-      function(){
-
-        if(!running){
-          return;
-        }
-
-
-        const elapsed =
-          (Date.now() - startTime)
-          / 1000;
-
-
-        const remaining =
-          data
-          .filter(
-            item =>
-              item.time > elapsed
-          );
-
-
-        if(
-          remaining.length === 0
-        ){
-
-          timer.textContent =
-            "✅ Schedule completed.";
-
-          stop(false);
-
-          return;
-        }
-
-
-        const next =
-          remaining[0];
-
-
-        const seconds =
-          Math.ceil(
+    const seconds =
+        Math.ceil(
             next.time - elapsed
-          );
+        );
 
 
-        timer.textContent =
-          "Next: " +
-          next.name +
-          " in " +
-          seconds +
-          " seconds";
+    document.getElementById(
+        "countdown"
+    ).textContent =
 
-      },
-      500
+    "⏳ Next: " +
+    next.name +
+    " — ₹" +
+    Number(next.amount)
+    .toLocaleString("en-IN") +
+    " in " +
+    seconds +
+    " sec";
+
+
+    setTimeout(
+        () => updateCountdown(schedule),
+        250
     );
 
 }
 
 
-/* ==========================
+/* =================================
    STOP
-========================== */
+================================= */
 
-function stop(
-  showMessage = true
-){
+function stopSchedule(){
 
-  running = false;
-
-
-  scheduledTimers.forEach(
-    clearTimeout
-  );
+    timers.forEach(
+        timer =>
+        clearTimeout(timer)
+    );
 
 
-  scheduledTimers = [];
+    timers = [];
+
+    running = false;
 
 
-  clearInterval(
-    countdownTimer
-  );
+    document.getElementById(
+        "status"
+    ).textContent =
+    "⏹️ Schedule stopped";
 
 
-  countdownTimer = null;
-
-
-  startButton.style.display =
-    "block";
-
-  stopButton.style.display =
-    "none";
-
-
-  if(showMessage){
-
-    status.textContent =
-      "🔴 Schedule stopped.";
-
-    timer.textContent =
-      "No schedule running.";
-
-  }
+    document.getElementById(
+        "countdown"
+    ).textContent =
+    "";
 
 }
 
 
-/* ==========================
-   BUTTONS
-========================== */
-
-addButton.onclick =
-function(){
-
-  addNotification(
-    15,
-    "Prince",
-    3000
-  );
-
-};
-
-
-startButton.onclick =
-start;
-
-stopButton.onclick =
-function(){
-
-  stop(true);
-
-};
-
-
-/* ==========================
+/* =================================
    SERVICE WORKER
-========================== */
+================================= */
 
 if(
-  "serviceWorker" in navigator
+    "serviceWorker" in navigator
 ){
 
-  navigator.serviceWorker
-    .register("sw.js")
+    navigator.serviceWorker
+    .register("./sw.js")
     .then(
-      () =>
-        console.log(
-          "Service Worker ready"
-        )
+        registration => {
+
+            console.log(
+                "Service Worker registered",
+                registration
+            );
+
+        }
     )
     .catch(
-      error =>
-        console.error(error)
+        error => {
+
+            console.log(
+                "Service Worker error:",
+                error
+            );
+
+        }
     );
 
 }
-
-
-/* ==========================
-   DEFAULT ROWS
-========================== */
-
-addNotification(
-  15,
-  "Prince",
-  3000
-);
-
-addNotification(
-  17,
-  "Nancy",
-  5000
-);
-
-addNotification(
-  30,
-  "Rahul",
-  2000
-);
 
 </script>
 
